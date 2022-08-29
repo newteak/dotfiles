@@ -1,0 +1,30 @@
+#!/bin/sh
+
+autoload -U colors && colors	# Load colors
+
+GBR() {
+    git status --short 2> /dev/null 1> /dev/null
+    if [ "$?" -ne "0" ]; then
+        return 1
+    else
+        branch="`git branch | grep '^\*' | cut -c 3-`"
+        branch_str="$fg[red]%}$branch"
+
+        stat=`git status --short \
+            | awk '{print $1}' \
+            | sort | uniq -c \
+            | tr '\n' ' ' \
+            | sed -E 's/([0-9]+) /\1/g; s/  */ /g; s/ *$//'`
+
+        stash_size=`git stash list | wc -l | sed 's/ //g'`
+        stash_icon=" $fg[green]%}≡\033[0m"
+        echo "$fg[white]%}[$branch_str$fg[white]%}]$stat$stash_icon$stash_size"
+        return 0
+    fi
+}
+NEWLINE=$'\n'
+
+precmd() {
+PS1="%B%{$fg[white]%}[%{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[magenta]%}%M %{$fg[blue]%}%~$fg[white]%}]$(GBR) %{$fg[green]%}$(date +%H:%M:%S)%{$reset_color%}%b${NEWLINE}\
+$ "
+}

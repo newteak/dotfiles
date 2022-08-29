@@ -1,0 +1,7 @@
+[General]
+  snippetfile = "~/.local/share/snippets/shell/pet.sh"
+  editor = "nvim"
+  column = 80
+  selectcmd = "fzf"
+  sortby  = "command"
+

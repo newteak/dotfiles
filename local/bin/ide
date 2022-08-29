@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# set tmux panes for ide
+if [ "$#" -eq 0 ]; then
+  tmux split-window -v
+  tmux split-window -h
+  tmux resize-pane -D 8
+  tmux select-pane -t 0
+  clear
+else
+  case $1 in
+    1)
+      tmux split-window -v
+      tmux resize-pane -D 8
+      tmux select-pane -D
+      clear
+      ;;
+    2)
+      tmux split-window -v
+      tmux select-pane -t 0
+      tmux split-window -h
+      tmux resize-pane -D 8
+      tmux select-pane -t 0
+      clear
+      ;;
+    3)
+      tmux split-window -h
+      tmux split-window -v
+      tmux resize-pane -D 8
+      tmux select-pane -t 0
+      tmux split-window -v
+      tmux resize-pane -D 8
+      tmux select-pane -t 0
+      clear
+      ;;
+    # py)
+    #   cd ~/Desktop/python
+    #   tmux split-window -v
+    #   tmux split-window -h
+    #   tmux resize-pane -D 8
+    #   tmux select-pane -t 3
+    #   vi .
+    #   clear
+    #   ;;
+    *)
+      echo [ERROR] 인수 "$1" 는 존재하지 않는 인수입니다.
+      ;;
+  esac
+fi

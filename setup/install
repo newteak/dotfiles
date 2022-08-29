@@ -1,0 +1,182 @@
+#!/bin/bash
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+    echo pacman update start &&
+        sudo pacman -Syu &&
+        echo "pacman update done";
+
+    echo install curl and wget start &&
+        yes | sudo pacman -S curl &&
+        yes | sudo pacman -S wget &&
+        echo "install curl and wget done";
+
+    echo install version control start &&
+        yes | sudo pacman -S git &&
+        yes | sudo pacman -S tig &&
+        echo "install version control done";
+
+    echo install input source start &&
+        yes | sudo pacman -S fcitx &&
+        yes | sudo pacman -S fcitx-hangul &&
+        yes | sudo pacman -S fcitx-mozc &&
+        yes | sudo pacman -S fcitx-qt5 &&
+        yes | sudo pacman -S fcitx-configtool &&
+        echo "install input source done";
+
+    echo install web browser start &&
+        yes | sudo pacman -S firefox &&
+        echo "install web browser done";
+
+    echo install editor start &&
+        yes | sudo pacman -S neovim &&
+        yes | sudo pacman -S emacs &&
+        echo "install editor done";
+
+    echo install terminal application start &&
+        yes | sudo pacman -S bat &&
+        yes | sudo pacman -S bc &&
+        yes | sudo pacman -S calcurse &&
+        yes | sudo pacman -S cronie &&
+        yes | sudo pacman -S ctags &&
+        yes | sudo pacman -S ffmpeg &&
+        yes | sudo pacman -S fzf &&
+        yes | sudo pacman -S imagemagick &&
+        yes | sudo pacman -S man-db &&
+        yes | sudo pacman -S moreutils &&
+        yes | sudo pacman -S newsboat &&
+        yes | sudo pacman -S pass &&
+        yes | sudo pacman -S ripgrep &&
+        yes | sudo pacman -S shellcheck &&
+        yes | sudo pacman -S sxiv &&
+        yes | sudo pacman -S the_silver_searcher &&
+        yes | sudo pacman -S tmux &&
+        yes | sudo pacman -S unclutter &&
+        yes | sudo pacman -S unrar &&
+        yes | sudo pacman -S unzip &&
+        yes | sudo pacman -S xcape &&
+        yes | sudo pacman -S xclip &&
+        yes | sudo pacman -S youtube-dl &&
+        yes | sudo pacman -S zathura &&
+        yes | sudo pacman -S zathura-pdf-mupdf &&
+        yes | sudo pacman -S zathura-poppler &&
+        yes | sudo pacman -S zip &&
+        yes | sudo pacman -S zsh &&
+        echo "install terminal application done";
+
+    echo install font start &&
+        yes | sudo pacman -S ttf-jetbrains-mono &&
+        yes | sudo pacman -S noto-fonts-cjk     &&
+        yes | sudo pacman -S ttf-joypixels      &&
+        echo "install font done";
+
+    echo install x &&
+        yes | sudo pacman -S xorg-server &&
+        yes | sudo pacman -S xorg-xinit &&
+        yes | sudo pacman -S xorg-xprop &&
+        echo "done x";
+
+    echo install x application start &&
+        yes | sudo pacman -S anki &&
+        yes | sudo pacman -S dunst &&
+        yes | sudo pacman -S gimp &&
+        echo "install x application done";
+
+    echo install db start &&
+        yes | sudo pacman -S mariadb &&
+        yes | sudo pacman -S postgresql &&
+        echo "install db done";
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo brew update start &&
+        brew update &&
+        brew upgrade &&
+    echo brew update done;
+
+    echo install curl and wget start &&
+        brew install curl &&
+        brew install wget &&
+    echo install curl and wget done;
+
+    echo install version control start &&
+        brew install git &&
+        brew install tig &&
+    echo install version control done;
+
+    echo install programing language start &&
+        brew install goenv &&
+        brew install nvm &&
+        brew install pyenv &&
+        brew install rbenv &&
+    echo install programing language done;
+
+    echo install editor start &&
+        brew install neovim &&
+        brew tap railwaycat/emacsmacport &&
+        brew install emacs-mac --with-no-title-bars &&
+    echo install editor done;
+
+    echo install terminal improve start &&
+        brew install zsh &&
+        brew install tmux &&
+        brew install the_silver_searcher &&
+        brew install ripgrep &&
+        brew install fzf &&
+    echo install terminal improve done;
+
+    echo install terminal application start &&
+        brew install pass &&
+        brew install calcurse &&
+        brew install vifm &&
+        brew install newsboat &&
+        brew install youtube-dl &&
+        brew install imagemagick &&
+        brew tap zegervdv/zathura &&
+        brew install zathura &&
+        brew install zathura-pdf-poppler &&
+    echo install terminal application done;
+
+    echo install gui application start &&
+        brew install --cask alfred &&
+        brew install --cask spotify &&
+        brew install --cask anki &&
+    echo install gui application done;
+
+    echo install keymap application start &&
+        brew install --cask spectacle &&
+        brew install --cask hammerspoon &&
+        brew install --cask karabiner-elements &&
+    echo install keymap application done;
+
+    echo install message application start &&
+        brew install --cask microsoft-teams &&
+        brew install --cask skype &&
+        brew install --cask slack &&
+        brew install --cask zoom &&
+    echo install message application done;
+
+    echo install db start &&
+        brew install mysql &&
+        brew install postgresql &&
+    echo install db done;
+fi
+
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/rbenv ] \
+#   && git clone https://github.com/rbenv/rbenv.git ${XDG_CONFIG_HOME:-$HOME/.config}/rbenv \
+#   && cd ${XDG_CONFIG_HOME:-$HOME/.config}/rbenv && src/configure && make -C src \
+#   && ${XDG_CONFIG_HOME:-$HOME/.config}/rbenv/bin/rbenv init
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/goenv ] \
+#   && git clone https://github.com/syndbg/goenv.git ${XDG_CONFIG_HOME:-$HOME/.config}/goenv
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/pyenv ] \
+#   && git clone https://github.com/pyenv/pyenv.git ${XDG_CONFIG_HOME:-$HOME/.config}/pyenv \
+#   && cd ${XDG_CONFIG_HOME:-$HOME/.config}/pyenv && src/configure && make -C src
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvm ] \
+#   && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/sdkman ] \
+#   && curl -s "https://get.sdkman.io" | zsh \
+#   && mv ~/.sdkman ${XDG_CONFIG_HOME:-$HOME/.config}/sdkman
+
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/zsh-autosuggestions ] \
+#   && git clone https://github.com/zsh-users/zsh-autosuggestions ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/zsh-autosuggestions
+# [ ! -d ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/fast-syntax-highlighting ] \
+#   && git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/fast-syntax-highlighting

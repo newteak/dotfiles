@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# @file
+# my_rename_directory_space_to_underscore
+# @brief
+# 현재 디렉토리의 모든 디렌토리의 스페이스를 전부 언더스코어로 변경한다.
+
+# @example
+# "hello hi" => "hello_hi"
+#
+# @arg
+# $1 maxdepth => 기본 값은 1
+#
+if [ "$#" -eq 0 ]; then
+  find ./ -maxdepth 1 -name "*" -type d -exec sh -c '
+    for f do
+      mv "$f" `echo $f | tr " " "_"` ;
+    done
+  ' sh {} +
+else
+  find ./ -maxdepth $1 -name "*" -type f -exec sh -c '
+    for f do
+      mv "$f" `echo $f | tr " " "_"` ;
+    done
+  ' sh {} +
+fi
+

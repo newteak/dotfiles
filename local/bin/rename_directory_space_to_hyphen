@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# @file
+# my_rename_directory_space_to_hyphen
+# @brief
+# 현재 디렉토리의 모든 디렌토리의 스페이스를 전부 하이픈으로 변경한다.
+
+# @example
+# "hello hi" => "hello-hi"
+#
+# @arg
+# $1 maxdepth => 기본 값은 1
+#
+if [ "$#" -eq 0 ]; then
+  find ./ -maxdepth 1 -name "*" -type d -exec sh -c '
+    for f do
+      mv "$f" `echo $f | tr " " "-"` ;
+    done
+  ' sh {} +
+else
+  find ./ -maxdepth $1 -name "*" -type f -exec sh -c '
+    for f do
+      mv "$f" `echo $f | tr " " "-"` ;
+    done
+  ' sh {} +
+fi
+

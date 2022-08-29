@@ -1,0 +1,19 @@
+# These files automatically update when edited/saved in vim:
+
+# keys	filename				description
+bf	 ~/.config/dotfiles/config/shell/bm-files         # This file, a list of bookmarked files
+bd	 ~/.config/dotfiles/config/shell/bm-dirs		      # A list of bookmarked directories similar to this file
+
+lob	 ~/.local/src/dwmblocks/config.h				          # dwmblocks: the status bar for dwm
+
+cfa	 ~/.config/dotfiles/config/shell/aliasrc          # aliases used by zsh (and potentially other shells)
+cfm	 ~/.config/mutt/muttrc		                        # mutt (email client) config
+cfmb ~/.config/ncmpcpp/bindings	                      # ncmpcpp (music player) keybinds file
+cfmc ~/.config/ncmpcpp/config	                        # ncmpcpp (music player) config
+cfn	 ~/.config/newsboat/config	                      # newsboat (RSS reader)
+cfp	 ~/.zprofile                                      # profile file for login settings for zsh
+cfu	 ~/.config/newsboat/urls		                      # RSS urls for newsboat
+cfv	 ~/.config/nvim/init.vim		                      # vim/neovim config
+cfx	 ~/.config/x11/xresources	                        # Colors, themes and variables for X11
+cfz	 ~/.config/zsh/.zshrc						                  # zsh (shell) config
+cfX	 ~/.config/sxiv/exec/key-handler	                # sxiv (image viewer) key/script handler

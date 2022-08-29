@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' -E 's/[ '$'\t'']+$//' "$1"
+    echo "remove whitespace done"
+fi
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+    sed -i 's/[ \t]*$//' "$1"
+    echo "remove whitespace done"
+fi
+

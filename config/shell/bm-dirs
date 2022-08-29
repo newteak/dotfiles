@@ -1,0 +1,23 @@
+# You can add comments to these files with #
+D        ~/Downloads
+book     ~/Documents/book
+cac      ~/.cache
+cf       ~/.config
+d        ~/Documents
+dfs      ~/.config/dotfiles
+lc       ~/.local
+lcb      ~/.local/bin
+lcr      ~/.local/src
+lcs      ~/.local/share
+mnt     /mnt
+mu       ~/Music
+org      ~/Documents/org-public
+orgp     ~/Documents/org-private
+pic      ~/Pictures
+play     ~/Documents/playground
+project  ~/Projects
+snip     ~/.local/share/snippets
+study    ~/Documents/study
+vv       ~/Videos
+wiki     ~/Documents/wiki-public
+wikip    ~/Documents/wiki-private

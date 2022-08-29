@@ -1,0 +1,32 @@
+[user]
+	email = invimacs@gmail.com
+	name = newteak
+[core]
+	editor = nvim
+	quotepath = false
+	autocrlf = input
+[pull]
+	rebase = false
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
+[http]
+	sslVerify = false
+[safe]
+	directory = /home/shin/.local/src/st
+[alias]
+  a = add
+  aa = add *
+  b = branch
+  c = commit
+  ce = commit --amend
+  cv = commit -v
+  d = diff
+  f = pull
+  l = log
+  p = push
+  s = status
+  ss = status -s

@@ -1,0 +1,112 @@
+# vim: filetype=sh
+
+# Vim mode
+bindkey -v
+
+## Change mode switch time more faster
+export KEYTIMEOUT=1
+
+## Turn on backspace
+set nocompatible
+set backspace=2
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;      # block
+        viins|main) echo -ne '\e[5 q';; # beam
+    esac
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+
+## 'k' and 'j' as history search on normal mode
+bindkey -M vicmd 'k' history-beginning-search-backward
+bindkey -M vicmd 'j' history-beginning-search-forward
+
+## Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# Up and down as history search on insert mode
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
+# bindkey -s '^q' TODO
+# default bindkey -s '^w' delete front word from cursor
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+# bindkey -s '^r' fzf-history
+# bindkey -s '^t' fzf-paste-path
+# bindkey -s '^y' TODO
+# default bindkey -s '^u' clear all line
+# default bindkey -s '^i' tab
+# Use lf to switch directories and bind it to ctrl-o
+lfcd () {
+    tmp="$(mktemp -uq)"
+    trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+bindkey -s '^o' '^ulfcd\n'
+bindkey -s '^p' 'projectile\n'
+# bindkey -s '^['
+# bindkey -s '^]' TODO
+
+bindkey -s '^a' '^ubc -lq\n'
+zle -N pet-select
+stty -ixon
+bindkey '^s' 'pet-select'
+# default bindkey -s '^d' exit shell
+bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+bindkey -s '^g' 'nvim ~/Documents/playground/message.msg\n'
+# default bindkey -s '^h' delete char
+# default bindkey -s '^j' enter
+# bindkey -s '^k' TODO
+# default bindkey -s '^l'clear
+# default bindkey -s '^;' paste history(fcitx)
+
+# default bindkey -s '^z' place current process in background
+bindkey -s '^x' 'tmux attach-session\n'
+# default bindkey -s '^c' cancel current process
+bindkey -s '^v' 'lf ./\n'
+# bindkey -s '^b' TODO
+# bindkey -s '^n' TODO
+# default bindkey -s '^m' enter
+
+# Function
+pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+
+# make terminal works like emacs's projectile.
+projectile() {
+  dir=$(find \
+    ~/Documents \
+    ~/Documents/study/ \
+    ~/Documents/playground/ \
+    ~/Templates \
+    -maxdepth 1 -mindepth 0 -type d | fzf) &&
+  print -s cd "$dir" &&
+  cd "$dir" &&
+  ls
+}
+
+# DEPRECATED
+# like emacs
+# bindkey "^A" vi-beginning-of-line
+# bindkey "^E" vi-end-of-line

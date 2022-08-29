@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    dday=$(date -j -f "%b %d %Y %H:%M:%S" "Sep 27 2021 00:00:00" +%s)
+    now=$(date +%s)
+    echo "$(( (now-dday)/86400 ))"
+fi
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+    dday=$(date -d "Sep 27 2021 00:00:00" +%s)
+    now=$(date +%s)
+    echo "$(( (now-dday)/86400 ))"
+fi
+

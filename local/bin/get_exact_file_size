@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# @file
+# get_exact_file_size
+#
+# @brief
+# 지정한 파일의 정확한 크기를 출력한다.
+#
+# @arg
+# $1 target_file => 크기를 조사하고 싶은 대상 파일
+#
+
+if [ "$#" -eq 0 ]; then
+    usage() {
+        echo "Usage: $0 target_file"
+        exit 1
+    }
+    usage
+fi
+
+TARGET_FILE=$1
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+    stat -c %s $TARGET_FILE
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    stat -f "%z" $TARGET_FILE
+fi

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    sleep $((60*5)) \
+        && terminal-notifier -title "Timer" -message "Time to work!" \
+        && say "time to work!"
+fi

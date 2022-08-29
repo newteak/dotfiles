@@ -1,0 +1,426 @@
+" vim: filetype=vim
+
+set surround
+set NERDTree
+set highlightedyank
+set easymotion
+
+set history=9999
+set undolevels=9999
+
+set showmode
+set showcmd
+
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+set number
+set relativenumber
+
+set scrolloff=8
+
+let mapleader=" "
+
+nnoremap <SPACE> <Nop>
+vnoremap <SPACE> <Nop>
+
+nnoremap <leader><ENTER> :marks<CR>
+vnoremap <leader><ENTER> :marks<CR>
+
+nnoremap <SPACE><SPACE> :action ShowIntentionActions<CR>
+vnoremap <SPACE><SPACE> :action ShowIntentionActions<CR>
+
+" <q> <Quick Action>
+" Doc
+nnoremap <leader>qd :action QuickJavaDoc<CR>
+" Implementation
+nnoremap <leader>qi :action QuickImplementations<CR>
+" Translate TODO 더 좋은 방법이 있지 않을까?
+nnoremap <leader>qt :action $EditorTranslateAction<CR>
+" Usage
+nnoremap <leader>qu :action FindUsages<CR>
+
+" <w> <Window>
+" Quit
+nnoremap <silent> <leader>wq :q<CR>
+" Move Cycle
+nnoremap <silent> <leader>ww <C-w><C-w>
+" Move h
+nnoremap <silent> <leader>wh <C-w>h
+" Move j
+nnoremap <silent> <leader>wj <C-w>j
+" Move k
+nnoremap <silent> <leader>wk <C-w>k
+" Move l
+nnoremap <silent> <leader>wl <C-w>l
+" Split
+nnoremap <silent> <leader>ws <C-w>s<C-w>j
+" V split
+nnoremap <silent> <leader>wv <C-w>v<C-w>l
+" Only
+nnoremap <silent> <leader>wo :action HideAllWindows<CR>
+
+" <e> <Error>
+" like Emacs
+inoremap <C-e> <End>
+" Acitve Error tab
+nnoremap <silent> <leader>ee :action ActivateProblemsViewToolWindow<CR>
+" Error Details
+nnoremap <silent> <leader>ed :action ShowErrorDescription<CR>
+" Error previous
+nnoremap <silent> <leader>e[ :action GotoPreviousError<CR>
+nnoremap <silent> <leader>ep :action GotoPreviousError<CR>
+" Error next
+nnoremap <silent> <leader>e] :action GotoNextError<CR>
+nnoremap <silent> <leader>en :action GotoNextError<CR>
+
+" <r> <Refactor>
+" Refactor
+nnoremap <leader>rr :action Refactorings.QuickListPopupAction<CR>
+" Variable
+vnoremap <leader>rv :action IntroduceVariable<CR>
+" Name
+nnoremap <leader>rn :action RenameElement<CR>
+" Method
+vnoremap <leader>rm :action ExtractMethod<CR>
+" Reload vimrc
+nnoremap <leader>R :source ~/.config/dotfiles/config/ideavim/ideavimrc<CR>
+
+" <t> <Toggle>
+" Wrap
+nnoremap <leader>tw :action EditorToggleUseSoftWraps<CR>
+" Indent
+nnoremap <leader>ti :action IndentRainbow.Toggle<CR>
+" FullScreen
+nnoremap <leader>tf :action ToggleFullScreen<CR>
+" Highlight
+nnoremap <C-l> :nohl<CR>
+" inLine
+nnoremap <leader>tl :action ToggleInlineHintsAction<CR>
+
+" <y> <Yank>
+noremap Y y$
+nnoremap <C-y> y^
+nnoremap <leader>Y "+y$
+nnoremap <leader><C-y> "+y^
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+
+" <u> <???>
+
+" <i> <Insert>
+" All Path
+nnoremap <leader>ip :action CopyAbsolutePath<CR>:action EditorPaste<CR>
+" File name
+nnoremap <leader>if :action CopyFileName<CR>:action EditorPaste<CR>
+" TODO Date
+" TODO Time
+
+" <o> <Open>
+" Back
+nnoremap <leader>ob :action ShowProcessWindow<CR>
+" Database
+nnoremap <leader>od :action ActivateDatabaseToolWindow<CR>
+" Finder
+nnoremap <leader>of :action RevealIn<CR>
+" Gradle
+nnoremap <leader>og :action ActivateGradleToolWindow<CR>
+" Npm
+nnoremap <leader>on :action ActivatenpmToolWindow<CR>
+" Terminal
+nnoremap <leader>ot :action Terminal.OpenInTerminal<CR>
+
+" <p> <Paste>
+nnoremap <C-p> :action SearchEverywhere<CR>
+vnoremap <C-p> <ESC>:action SearchEverywhere<CR>
+inoremap <C-S-p> <ESC>:action HippieCompletion<CR>a
+
+" System Clipboard Paste
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+
+" <[>
+nnoremap [[ :action MethodUp<CR>
+onoremap [[ :action MethodUp<CR>
+nnoremap <leader>[ :action PreviousTab<CR>
+vnoremap <leader>[ :action PreviousTab<CR>
+
+" <]>
+nnoremap ]] :action MethodDown<CR>
+onoremap ]] :action MethodDown<CR>
+nnoremap <leader>] :action NextTab<CR>
+vnoremap <leader>] :action NextTab<CR>
+
+" <a> <All>
+inoremap <C-a> <Home>
+nnoremap <leader>a :action $SelectAll<CR>
+vnoremap <leader>a :action $SelectAll<CR>
+
+" <s> <Search>
+nnoremap s <Nop>
+vnoremap s <Nop>
+" Like Emacs
+nnoremap <C-s> :action Find<CR>
+vnoremap <C-s> :action Find<CR>
+
+" M-w go to last window
+nmap ss <Plug>(easymotion-bd-f2)
+vmap ss <Plug>(easymotion-bd-f2)
+nmap sf <Plug>(easymotion-bd-fl)
+vmap sf <Plug>(easymotion-bd-fl)
+
+nmap sh <Plug>(easymotion-bl)
+vmap sh <Plug>(easymotion-bl)
+nmap sk <Plug>(easymotion-k)
+vmap sk <Plug>(easymotion-k)
+nmap sj <Plug>(easymotion-j)
+vmap sj <Plug>(easymotion-j)
+nmap sl <Plug>(easymotion-wl)
+vmap sl <Plug>(easymotion-wl)
+
+nnoremap <leader>ss :action Find<CR>
+vnoremap <leader>ss :action Find<CR>
+nnoremap <leader>sg :action FindInPath<CR>
+vnoremap <leader>sg :action FindInPath<CR>
+nnoremap <leader>st :action ActivateTODOToolWindow<CR>
+vnoremap <leader>st :action ActivateTODOToolWindow<CR>
+nnoremap <leader>sp :action FindInPath<CR>
+vnoremap <leader>sp :action FindInPath<CR>
+
+" <d> <Debug>
+" Run Debug
+nnoremap <leader>dd :action DebugClass<CR>
+" Breakpoint Toggle
+nnoremap <leader>dt :action ToggleLineBreakpoint<CR>
+" Window
+nnoremap <leader>dw :action ActivateDebugToolWindow<CR>
+" List
+nnoremap <leader>dl :action ViewBreakpoints<CR>
+
+" <f> <Find>
+" In Project
+nnoremap <leader>fp :action FindInPath<CR>
+" Recently Usage
+nnoremap <leader>fr :action RecentChangedFiles<CR>
+" Recent Location
+nnoremap <leader>fl :action RecentLocations<CR>
+" Usages
+nnoremap <leader>fu :action FindUsages<CR>
+" Name
+nnoremap <leader>fn :action GotoFile<CR>
+" Dot
+nnoremap <leader>f, :e ~/.config/dotfiles/config/ideavim/ideavimrc<CR>
+
+" <g> <Git>
+" Go to Definition
+nnoremap gd :action GotoDeclaration<CR>
+" Go to Implementation
+nnoremap gi :action GotoImplementation<CR>
+" Go to References
+nnoremap gr :action FindUsages<CR>
+" Go Type Definition
+nnoremap gy :action GotoTypeDeclaration<CR>
+nnoremap g[ :action VcsShowPrevChangeMarker<CR>
+nnoremap g] :action VcsShowNextChangeMarker<CR>
+
+" Git
+nnoremap <leader>gg :action ActivateVersionControlToolWindow<CR>
+" Commit
+nnoremap <leader>gc :action CheckinProject<CR>
+" Pull
+nnoremap <leader>gf :action Git.Pull<CR>
+" Push
+nnoremap <leader>gp :action Vcs.Push<CR>
+" Log
+nnoremap <leader>gl :action Vcs.Show.Log<CR>
+" History
+nnoremap <leader>gh :action Vcs.ShowTabbedFileHistory<CR>
+vnoremap <leader>gh :action Vcs.ShowHistoryForBlock<CR>
+" Diff
+nnoremap <leader>gd :action Compare.SameVersion<CR>
+" Branches
+nnoremap <leader>gb :action Git.Branches<CR>
+
+" <h>
+" nnoremap <leader>h ^
+" vnoremap <leader>h ^
+
+" <j>
+nnoremap <C-j> i<CR><ESC>
+" nnoremap <leader>j 7j
+" vnoremap <leader>j 7j
+
+" <k>
+" nnoremap <leader>k 7k
+" vnoremap <leader>k 7k
+
+" <l>
+nnoremap <C-j> :nohl<CR>
+" nnoremap <leader>l $
+" vnoremap <leader>l $
+
+" <;>
+nnoremap <leader>; :
+vnoremap <leader>; :
+nnoremap <C-;> :action InsertLiveTemplate<CR>i
+vnoremap <C-;> :action InsertLiveTemplate<CR>i
+inoremap <C-;> <ESC>:action InsertLiveTemplate<CR>i
+
+" <'>
+
+" <\>
+nnoremap \ :action FindInPath<CR>
+
+" <z>
+
+" <x> <Run>
+" M-x run current file
+vnoremap x "_x
+nnoremap x "_x
+" All Action
+nnoremap <leader>xx :action GotoAction<CR>
+" Run Build
+nnoremap <leader>xb :action CompileDirty<CR>
+" Run Debug
+nnoremap <leader>xd :action DebugClass<CR>
+" Run File
+nnoremap <leader>xf :action RunClass<CR>
+" Run Lint
+nnoremap <leader>xl :action ReformatCode<CR>
+vnoremap <leader>xl :action ReformatCode<CR>
+" Rerun
+nnoremap <leader>xr :action Rerun<CR>
+
+" <c> <Clipboard & Comment>
+" Comment
+nnoremap gc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR>
+" Path
+" Absolute
+nnoremap <leader>cpa :action CopyAbsolutePath<CR>
+" Relative
+nnoremap <leader>cpr :action CopyPathFromRepositoryRootProvider<CR>
+" File name
+nnoremap <leader>cf :action CopyFileName<CR>
+" With Line number
+nnoremap <leader>cl :action CopyPathWithLineNumber<CR>
+
+" <v> <???>
+
+" <b> <Buffer>
+" Buffers
+nnoremap <leader>bb :action Switcher<cr>
+" Quit
+nnoremap <leader>bq :close<CR>
+" Only
+nnoremap <leader>bo :action CloseAllEditorsButActive<CR>
+" kill Left
+nnoremap <leader>bl :action CloseAllToTheLeft<CR>
+" kill Right
+nnoremap <leader>br :action CloseAllToTheRight<CR>
+
+" <n>
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <C-n> :action Generate<CR>
+inoremap <C-S-n> <ESC>:action HippieBackwardCompletion<CR>a
+
+" <m> <Bookmarks>
+" Show All
+nnoremap <leader>ma :action ShowBookmarks<CR>
+" Toggle
+nnoremap <leader>mm :action ToggleBookmark<CR>
+" Edit Memo
+nnoremap <leader>me :action EditBookmark<CR>
+" Previous
+nnoremap <leader>mp :action GotoPreviousBookmark<CR>
+nnoremap <leader>m[ :action GotoPreviousBookmark<CR>
+" Next
+nnoremap <leader>mn :action GotoNextBookmark<CR>
+nnoremap <leader>m] :action GotoNextBookmark<CR>
+
+" <,>
+
+" <.>
+
+" </>
+
+" <`> last window
+nnoremap <silent> <leader>` :action JumpToLastWindow<CR>
+
+" <1>
+
+" <2>
+nnoremap <leader>2 :NERDTree<CR>
+
+" <3>
+nnoremap <leader>3 :action ActivateTODOToolWindow<CR>
+
+" <4>
+
+" <5>
+nnoremap <leader>5 :action ActivateDebugToolWindow<CR>
+
+" <6>
+nnoremap <leader>6 :action ActivateVersionControlToolWindow<CR>
+
+" <7>
+nnoremap <leader>7 :action ActivateProblemsViewToolWindow<CR>
+
+" <8>
+nnoremap <leader>8 :action ActivateStructureToolWindow<CR>
+nnoremap * *zz
+
+" <9>
+nnoremap <leader>9 :action ManageRecentProjects<CR>
+
+" <0>
+nnoremap <leader>0 :action LocalHistory.ShowHistory<CR>
+vnoremap <leader>0 :action LocalHistory.ShowSelectionHistory<CR>
+
+" <->
+nnoremap <leader>- :action ToggleDistractionFreeMode<CR>
+
+" <=>
+nnoremap <leader>= :action Terminal.OpenInTerminal<CR>
+
+" <F1>
+
+" <F2> File Finder
+nnoremap <F2> :NERDTree<CR>
+nnoremap <leader><F2> :NERDTreeFind<CR>
+
+" <F3> TODO
+nnoremap <F3> :action ActivateTODOToolWindow<CR>
+
+" <F4> Snippet
+vnoremap <F4> :action SaveAsTemplate<cr>
+
+" <F5> Debug
+nnoremap <F5> :action ActivateDebugToolWindow<CR>
+
+" <F6> Git
+nnoremap <F6> :action ActivateVersionControlToolWindow<CR>
+
+" <F7> Show Error
+nnoremap <F7> :action ActivateProblemsViewToolWindow<CR>
+
+" <F8> Structure
+nnoremap <F8> :action ActivateStructureToolWindow<CR>
+
+" <F9> Project
+nnoremap <F9> :action ManageRecentProjects<CR>
+
+" <F10> History
+nnoremap <F10> :action LocalHistory.ShowHistory<CR>
+vnoremap <F10> :action LocalHistory.ShowSelectionHistory<CR>
+
+" <F11> Focus
+nnoremap <F11> :action HideAllWindows<CR>
+nnoremap <leader><F11> :action ToggleDistractionFreeMode<CR>
+
+" <F12> Terminal
+nnoremap <F12> :sh<CR>
+nnoremap <leader><F12> :action Terminal.OpenInTerminal<CR>

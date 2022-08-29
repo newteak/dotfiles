@@ -1,0 +1,46 @@
+"--- Blog ---"
+http://lukesmith.xyz/rss.xml "~Luke Smith (Blog)"
+
+" "
+"--- YouTube ---"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "~Luke Smith (YouTube)"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw "~ThePrimeagen (YouTube)"
+
+" "
+"--- Tech ---"
+https://www.archlinux.org/feeds/news/ "arch"
+http://blog.cleancoder.com/atom.xml "uncle bob"
+
+" "
+"--- Java ---"
+
+" "
+"--- Go ---"
+https://www.ardanlabs.com/blog/index.xml "Ardan Labs’ Blog"
+
+" "
+"--- Kotlin ---"
+
+" "
+"--- Swift ---"
+
+" "
+"--- JavaScript ---"
+
+" "
+"--- Ruby ---"
+https://www.ruby-lang.org/ja/feeds/news.rss "ruby language news"
+
+" "
+"--- Python ---"
+https://realpython.com/atom.xml?format=xml "realpython"
+
+" "
+"--- Php ---"
+
+" "
+"--- Scala ---"
+
+" "
+"--- Clojure ---"
+

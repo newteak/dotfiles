@@ -1,0 +1,126 @@
+#!/bin/zsh
+
+# History in cache directory:
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTFILE=~/.cache/zsh/history
+
+setopt share_history # Sync history
+setopt autocd		# Automatically cd into typed directory.
+stty stop undef		# Disable ctrl-s to freeze terminal.
+setopt interactive_comments
+stty stop undef # Disable ctrl-s to freeze terminal.
+
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+# Load aliases and shortcuts etc if existent.
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/zps1" ] \
+  && source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/zps1"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/aliasrc" ] \
+  && source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/aliasrc"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/keybinding" ] \
+  &&  source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/keybinding"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/functions" ] \
+  &&  source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/functions"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/fzf" ] \
+  && source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/fzf"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/shortcut" ] \
+  && source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/shortcut"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/zshnameddir" ] \
+  && source "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/config/shell/zshnameddir"
+
+# FZF
+export FZF_DEFAULT_OPTS='--layout=reverse --height 40% --color=bg+:#3c3836,bg:#32302f,spinner:#fb4934,hl:#928374,fg:#ebdbb2,header:#928374,info:#8ec07c,pointer:#fb4934,marker:#fb4934,fg+:#ebdbb2,prompt:#fb4934,hl+:#fb4934'
+
+# Less
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+pyenv() {
+  unfunction "$0"
+  source <(pyenv init -)
+  $0 "$@"
+}
+
+goenv() {
+  unfunction "$0"
+  source <(goenv init -)
+  $0 "$@"
+}
+
+rbenv() {
+  unfunction "$0"
+  source <(rbenv init -)
+  $0 "$@"
+}
+
+# rbenv
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  rbenv() {
+    unfunction "$0"
+    source <(rbenv init -)
+    $0 "$@"
+  }
+fi
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+  eval "$(rbenv init - zsh --no-rehash)"
+fi
+
+# pyenv
+[[ -d ${XDG_CONFIG_HOME:-$HOME/.config}/pyenv ]] \
+  && export PYENV_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}/pyenv" \
+  && export PATH="$PYENV_ROOT/bin:$PATH"
+  # && eval "$(pyenv init - --no-rehash)"
+
+# goenv
+[[ -d ${XDG_CONFIG_HOME:-$HOME/.config}/goenv ]] \
+  && export GOENV_ROOT=${XDG_CONFIG_HOME:-$HOME/.config}/goenv \
+  && export PATH=$GOENV_ROOT/bin:$PATH \
+  && export GOPATH=$HOME/go
+  # && eval "$(goenv init -)"
+
+# nvm
+if [ -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvm ]; then
+  export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvm"
+  nvm_cmds=(nvm node npm)
+  for cmd in $nvm_cmds ; do
+    alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh && $cmd"
+  done
+fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/sdkman"
+[[ -s "${XDG_CONFIG_HOME:-$HOME/.config}/sdkman/bin/sdkman-init.sh" ]] && source "${XDG_CONFIG_HOME:-$HOME/.config}/sdkman/bin/sdkman-init.sh"
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+  # Load auto suggestions
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
+  # Load syntax highlighting; should be last.
+  source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Load auto suggestions
+  source  ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+  # Load syntax highlighting; should be last.
+  source ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+fi
+

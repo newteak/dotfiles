@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# This script is called on startup to remap keys.
+# Increase key speed via a rate change
+xset r rate 300 50
+
+# Map the caps lock key to ctrl...
+# Ref: grep -E "(ctrl):" /usr/share/X11/xkb/rules/base.lst
+setxkbmap -option ctrl:nocaps
+
+# Swap the left alt with left super.
+# Ref: grep -E "(win):" /usr/share/X11/xkb/rules/base.lst
+setxkbmap -option altwin:swap_alt_win
+
+# Map the Muhenkan to left alt as welll.
+# Ref: xmodmap -pk | grep -i alt
+xmodmap -e 'keycode 102 = Alt_L'
+
+# Map the menu button to right super as well.
+# Ref: xmodmap -pk | grep -i super
+# xmodmap -e 'keycode 135 = Super_R'
+
+# Map the Henkan button to Fn.
+xmodmap -e 'keysym Henkan_Mode = Mode_switch'
+
+# Vim movement always on 😁
+xmodmap -e 'keycode  43 = h H Left H h H'
+xmodmap -e 'keycode  44 = j J Down J j J'
+xmodmap -e 'keycode  45 = k K Up K k K'
+xmodmap -e 'keycode  46 = l L Right L l L'
+
+# Henka + m => enter
+xmodmap -e 'keycode  58 = m M Return M m M'
+
+# Katakana => Nope
+xmodmap -e 'keycode  101 = Hiragana_Katakana NoSymbol Hiragana_Katakana'
+
+# ro => _(under_bar)
+xmodmap -e 'keycode  97 = underscore underscore underscore underscore'
+
+# Hiragana_Katakana => Mode_switch
+xmodmap -e 'keycode 101 = Mode_switch'
+
+# Hiragana_Katakana => Shift_R
+#xmodmap -e 'keycode 101 = Shift_R'
+#xmodmap -e 'clear shift'
+#xmodmap -e 'add shift = Shift_L Shift_R'
+
+# Turn off the caps lock if on since there is no longer a key for it.
+xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+
+# Legacy
+# Map the caps lock key to super...
+# setxkbmap -option caps:super
+
+# But when it is pressed only once, treat it as escape.
+# killall xcape 2>/dev/null ; xcape -e 'SUPER_L=Escape'
+
+# But when Control_L is pressed only once, treat it as escape.
+# Ref: man xcape
+killall xcape 2>/dev/null ; xcape -e 'Control_L=Escape'
+
+# But when Henka is pressed only once, treat it as Super_R.
+# Ref: man xcape
+" killall xcape 2>/dev/null ; xcape -e 'Mode_switch=Super_R'
+

@@ -1,0 +1,86 @@
+# vim: filetype=sh
+
+mkcd() {
+  mkdir $1 && cd $1
+}
+
+alias \
+  gpa="git_pull_all";
+
+cpass() {
+  pass -c $(pass | sed -n "2,\$p" | cut -d " " -f 2 | fzf --ansi)
+}
+
+# fzf
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+fzf-down() {
+  fzf --height 60% --min-height 20 --border --bind ctrl-/:toggle-preview "$@"
+}
+
+# fzf + vim
+fim() {
+  FILE=$(fzf --height 100% --preview "bat --color=always {}") &&
+  print -s nvim "$FILE" &&
+  nvim $FILE
+}
+
+# rg + vim
+rim() {
+    RESULT=`rg --no-ignore --color=always --line-number --no-heading --invert-match '^\s*$' 2>/dev/null | \
+        fzf --height 100% -d ':' --ansi --preview 'bat --style=numbers --color=always --highlight-line {2} {1}'` &&
+    FILE=`echo "$RESULT" | awk -F ':' '{print $1}'` &&
+    LINE=`echo "$RESULT" | awk -F ':' '{print $2}'` &&
+    print -s nvim $FILE +$LINE &&
+    nvim $FILE +$LINE
+}
+
+## Fzf with cD
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                    -o -type d -print 2> /dev/null | fzf +m --height 60% --preview "ls {}") &&
+  cd "$dir"
+}
+
+## Fzf Git checkOut
+fgo() {
+  git checkout $(git branch -a | \
+  tr -d " " | \
+  fzf --height 100% --prompt "CHECKOUT BRANCH>" --preview "git log --color=always {}" | \
+  head -n 1 | \
+  sed -e "s/^\*\s*//g" | \
+  perl -pe "s/remotes\/origin\///g")
+}
+
+## Fzf copy Git Diff selector
+fgd() {
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; bat {-1})' |
+  cut -c4- | sed 's/.* -> //' | xargs -I '{}' nvim {}
+}
+
+## Fzf copy Git Branch
+fgb() {
+  is_in_git_repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##' | pbcopy
+}
+
+## Fzf copy Git Commit history
+fgc() {
+  is_in_git_repo || return
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+    --header 'Press CTRL-S to toggle sort' \
+    --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always' |
+  grep -o "[a-f0-9]\{7,\}" | pbcopy
+}
+

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [[ "$OSTYPE" == "linux"* ]]; then
+    DESKTOP="$HOME/Desktop"
+    DOCUMENTS="$HOME/Documents"
+    DOWNLOAD="$HOME/Downloads"
+    MUSIC="$HOME/Music"
+    PICTURES="$HOME/Pictures"
+    PUBLIC="$HOME/Public"
+    TEMPLATES="$HOME/Templates"
+    VIDEOS="$HOME/Videos"
+
+    [ ! -d "$DESKTOP" ] && mkdir "$DESKTOP"
+    [ ! -d "$DOWNLOAD" ] && mkdir "$DOWNLOAD"
+    [ ! -d "$DOCUMENTS" ] && mkdir "$DOCUMENTS" && chmod 700 "$DOCUMENTS"
+    [ ! -d "$MUSIC" ] && mkdir "$MUSIC"
+    [ ! -d "$PICTURES" ] && mkdir "$PICTURES" && chmod 700 "$DOCUMENTS"
+    [ ! -d "$PUBLIC" ] && mkdir "$PUBLIC"
+    [ ! -d "$TEMPLATES" ] && mkdir "$TEMPLATES"
+    [ ! -d "$VIDEOS" ] && mkdir "$VIDEOS"
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    DESKTOP="$HOME/Desktop"
+    DOCUMENTS="$HOME/Documents"
+    DOWNLOAD="$HOME/Downloads"
+    MUSIC="$HOME/Music"
+    PICTURES="$HOME/Pictures"
+    PUBLIC="$HOME/Public"
+    TEMPLATES="$HOME/Templates"
+    VIDEOS="$HOME/Videos"
+
+    [ ! -d "$DESKTOP" ] && mkdir "$DESKTOP"
+    [ ! -d "$DOWNLOAD" ] && mkdir "$DOWNLOAD"
+    [ ! -d "$DOCUMENTS" ] && mkdir "$DOCUMENTS"
+    [ ! -d "$MUSIC" ] && mkdir "$MUSIC"
+    [ ! -d "$PICTURES" ] && mkdir "$PICTURES"
+    [ ! -d "$PUBLIC" ] && mkdir "$PUBLIC"
+    [ ! -d "$TEMPLATES" ] && mkdir "$TEMPLATES"
+    [ ! -d "$VIDEOS" ] && mkdir "$VIDEOS"
+fi
+
