@@ -24,6 +24,18 @@
   (setq use-package-verbose t)
 #+end_src
 
+** Automatic Package Updates
+#+begin_src emacs-lisp
+  (use-package auto-package-update
+    :custom
+    (auto-package-update-interval 7)
+    (auto-package-update-prompt-before-update t)
+    (auto-package-update-hide-results t)
+    :config
+    (auto-package-update-maybe)
+    (auto-package-update-at-time "09:00"))
+#+end_src
+
 * General configuration
 ** User information
 #+begin_src emacs-lisp
@@ -793,53 +805,46 @@ M-x lsp-install-server <RET> ts-ls <RET>
 
 *** Code
 #+begin_src emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :commands (lsp lsp-deferred)
-  ;;   :init
-  ;;   (setq lsp-keymap-prefix "M-l")
-  ;;   :config
-  ;;   (lsp-enable-which-key-integration t)
-  ;;   (setq lsp-ui-doc-enable nil)
-  ;;   (setq lsp-eldoc-hook nil)
-  ;;   :hook
-  ;;   ((
-  ;;      c-mode          ;; clang
-  ;;      css-mode        ;; css
-  ;;      ;; go-mode         ;; go
-  ;;      js2-mode        ;; javascript
-  ;;      python-mode     ;; python
-  ;;      ruby-mode       ;; ruby
-  ;;      sh-mode         ;; sh/bash
-  ;;      ;; sql-mode        ;; sql
-  ;;      typescript-mode ;; typescript
-  ;;      web-mode        ;; html/css/javascript
-  ;;      ) . lsp-deferred))
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "M-l")
+    :config
+    (lsp-enable-which-key-integration t)
+    (setq lsp-ui-doc-enable nil)
+    (setq lsp-eldoc-hook nil)
+    :hook
+    ((
+       css-mode        ;; css
+       ;; go-mode         ;; go
+       js2-mode        ;; javascript
+       python-mode     ;; python
+       sh-mode         ;; sh/bash
+       ;; sql-mode        ;; sql
+       typescript-mode ;; typescript
+       web-mode        ;; html/css/javascript
+       ) . lsp-deferred))
 
-  ;; (use-package lsp-ui
-  ;;   :hook
-  ;;   (lsp-mode . lsp-ui-mode)
-  ;;   :custom
-  ;;   (lsp-ui-doc-header t)
-  ;;   (lsp-ui-doc-include-signature nil)
-  ;;   (lsp-ui-doc-use-childframe t)
-  ;;   (lsp-ui-doc-position 'bottom))
+  (use-package lsp-ui
+    :hook
+    (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-header t)
+    (lsp-ui-doc-include-signature nil)
+    (lsp-ui-doc-use-childframe t)
+    (lsp-ui-doc-position 'bottom))
 
-  ;; (use-package lsp-ivy
-  ;;   :after lsp)
+  (use-package lsp-ivy
+    :after lsp)
 
-  ;; (use-package lsp-treemacs
-  ;;   :after lsp
-  ;;   :config
-  ;;   (setq lsp-treemacs-symbols-position-params `((side . right) (slot . 2) (window-width . 30))))
+  (use-package lsp-treemacs
+    :after lsp
+    :config
+    (setq lsp-treemacs-symbols-position-params `((side . right) (slot . 2) (window-width . 30))))
 #+end_src
 
 ** Shell
 *** Code
-** C
-#+begin_src emacs-lisp
-  (setq-default c-basic-offset 4)
-#+end_src
-
 ** Lisp
 #+begin_src emacs-lisp
   (setq lisp-indent-offset 2)
@@ -853,17 +858,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (setq slime-contribs '(slime-fancy slime-quicklisp)))
 #+end_src
 
-** Java
-# #+begin_src emacs-lisp
-# #+end_src
-
-** Groovy
-#+begin_src emacs-lisp
-  (use-package groovy-mode
-    :mode
-    ("\\.gradle\\'"  . groovy-mode))
-#+end_src
-
 ** Go
 #+begin_src emacs-lisp
   (use-package go-mode
@@ -874,21 +868,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
 
 ** SQL
 #+begin_src emacs-lisp
-#+end_src
-
-** Ruby
-#+begin_src emacs-lisp
-  (use-package ruby-mode
-    :mode
-    (("\\.rb\\'" . ruby-mode))
-    :config
-    (setq ruby-indent-level 2)
-    )
-
-  (use-package rbenv
-    :config
-    (global-rbenv-mode)
-    )
 #+end_src
 
 ** Python
@@ -917,7 +896,7 @@ M-x lsp-install-server <RET> ts-ls <RET>
 #+begin_src emacs-lisp
   (use-package js2-mode
     :mode
-    (("\\.js\\'" . js-mode))
+    (("\\.js\\'" . js2-mode))
     :hook
     (('js-mode . 'js2-minor-mode))
     :config
@@ -1154,7 +1133,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (add-to-list 'org-structure-template-alist '("ts"   . "src typescript"))
     )
 #+end_src
-
 
 * Keymaps
 ** general
@@ -2484,18 +2462,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
 hello_hloo
 
 * Deprecated
-** Automatic Package Updates
-#+begin_src emacs-lisp
-  ;; (use-package auto-package-update
-  ;;   :custom
-  ;;   (auto-package-update-interval 7)
-  ;;   (auto-package-update-prompt-before-update t)
-  ;;   (auto-package-update-hide-results t)
-  ;;   :config
-  ;;   (auto-package-update-maybe)
-  ;;   (auto-package-update-at-time "09:00"))
-#+end_src
-
 ** Drag-stuff package
 #+begin_src emacs-lisp
   ;; (use-package drag-stuff
