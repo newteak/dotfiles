@@ -76,14 +76,7 @@ let NERDTreeQuitOnOpen=1
 " plugin name: vim-wiki
 let g:vimwiki_list=[
     \{
-    \   'path': '~/Documents/wiki-public/',
-    \   'syntax' : 'markdown',
-    \   'ext' : '.md',
-    \   'index' : 'home',
-    \   'diary_rel_path': './today',
-    \},
-    \{
-    \   'path': '~/Documents/wiki-private/',
+    \   'path': '~/Documents/wiki/',
     \   'syntax' : 'markdown',
     \   'ext' : '.md',
     \   'index' : 'index',
@@ -93,10 +86,7 @@ let g:vimwiki_list=[
 
 let g:auto_template_list = [
     \{
-    \   'path': '~/Documents/wiki-public/',
-    \},
-    \{
-    \   'path': '~/Documents/wiki-private/',
+    \   'path': '~/Documents/wiki/',
     \},
 \]
 
