@@ -11,8 +11,7 @@ lcr      ~/.local/src
 lcs      ~/.local/share
 mnt     /mnt
 mu       ~/Music
-org      ~/Documents/org-public
-orgp     ~/Documents/org-private
+org      ~/Documents/org
 pic      ~/Pictures
 play     ~/Documents/playground
 project  ~/Projects
