@@ -105,6 +105,8 @@ augroup vimwikiauto
     autocmd FileType vimwiki inoremap <C-s> <C-r>=vimwiki#tbl#kbd_tab()<CR>
     " <C-a> move table column to left
     autocmd FileType vimwiki inoremap <C-a> <Left><C-r>=vimwiki#tbl#kbd_shift_tab()<CR>
+    " disable tab
+    au filetype vimwiki silent! iunmap <buffer> <Tab>
 augroup END
 
 autocmd FileType vimwiki nnoremap <C-h> :VimwikiGoBackLink<CR>
