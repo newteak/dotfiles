@@ -40,7 +40,7 @@
 ** User information
 #+begin_src emacs-lisp
   (setq user-full-name "Taeksoo Shin"
-    user-mail-address "invimacs@gmail.com")
+    user-mail-address "cu7898@gmail.com")
 #+end_src
 
 ** GC
@@ -210,6 +210,13 @@ I don't like stun grenade.
 #+begin_src emacs-lisp
   (use-package sudo-edit
     :commands sudo-edit-current-file sudo-edit-find-file)
+#+end_src
+
+** Drag-stuff package
+#+begin_src emacs-lisp
+  (use-package drag-stuff
+    :config
+    (drag-stuff-global-mode))
 #+end_src
 
 * OS configuration
@@ -796,14 +803,12 @@ the window.
 
 * Language
 ** LSP
-*** Insatll lsp server list
 M-x lsp-install-server <RET> bash-ls <RET>
 M-x lsp-install-server <RET> clangd <RET>
 gem install solargraph
 M-x lsp-install-server <RET> css-ls <RET>
 M-x lsp-install-server <RET> ts-ls <RET>
 
-*** Code
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
@@ -815,12 +820,10 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (setq lsp-eldoc-hook nil)
     :hook
     ((
+       c-mode          ;; clang
        css-mode        ;; css
-       ;; go-mode         ;; go
        js2-mode        ;; javascript
-       python-mode     ;; python
        sh-mode         ;; sh/bash
-       ;; sql-mode        ;; sql
        typescript-mode ;; typescript
        web-mode        ;; html/css/javascript
        ) . lsp-deferred))
@@ -844,63 +847,22 @@ M-x lsp-install-server <RET> ts-ls <RET>
 #+end_src
 
 ** Shell
-*** Code
-** Lisp
+** C
 #+begin_src emacs-lisp
-  (setq lisp-indent-offset 2)
-  (add-to-list 'auto-mode-alist
-    '("\\.lisp\\'" . lisp-mode)
-    '("\\.lsp\\'"  . lisp-mode))
-
-  (use-package slime
-    :config
-    (setq inferior-lisp-program "/usr/local/bin/sbcl")
-    (setq slime-contribs '(slime-fancy slime-quicklisp)))
-#+end_src
-
-** Go
-#+begin_src emacs-lisp
-  (use-package go-mode
-    :mode
-    (("\\.go\\'" . go-mode))
-    )
-#+end_src
-
-** SQL
-#+begin_src emacs-lisp
-#+end_src
-
-** Python
-*** LSP
-#+begin_src emacs-lisp
-  ;; (use-package lsp-pyright
-  ;;   :after lsp
-  ;;   :hook
-  ;;   (python-mode . (lambda () (require 'lsp-pyright) (lsp-deferred)))
-  ;;   :init
-  ;;   (when (executable-find "python3")
-  ;;     (setq lsp-pyright-python-executable-cmd "python3")))
-#+end_src
-
-*** Code
-#+begin_src emacs-lisp
-  (use-package python-mode)
-#+end_src
-
-** CSS
-#+begin_src emacs-lisp
-  (setq css-indent-offset 2)
+  (setq-default c-basic-offset 4)
 #+end_src
 
 ** JavaScript
 #+begin_src emacs-lisp
   (use-package js2-mode
     :mode
-    (("\\.js\\'" . js2-mode))
+    (("\\.js\\'" . js-mode))
     :hook
     (('js-mode . 'js2-minor-mode))
     :config
-    (setq js-indent-level 2))
+    (setq-default js2-basic-offset 2)
+    (add-hook 'js2-minor-mode-hook (lambda () (setq evil-shift-width js2-basic-offset)))
+    )
 #+end_src
 
 ** TypeScript
@@ -924,11 +886,40 @@ M-x lsp-install-server <RET> ts-ls <RET>
     )
 #+end_src
 
-** Markdown
+** Elixir
+#+begin_src emacs-lisp
+  (use-package elixir-mode)
+#+end_src
+
+** Lisp
+#+begin_src emacs-lisp
+  (setq lisp-indent-offset 2)
+  (add-to-list 'auto-mode-alist
+    '("\\.lisp\\'" . lisp-mode)
+    '("\\.lsp\\'"  . lisp-mode))
+
+  (use-package slime
+    :config
+    (setq inferior-lisp-program "/usr/local/bin/sbcl")
+    (setq slime-contribs '(slime-fancy slime-quicklisp)))
+#+end_src
+
+** CSS
+#+begin_src emacs-lisp
+  (setq css-indent-offset 2)
+#+end_src
+
 ** JSON
 #+begin_src emacs-lisp
   (use-package json-mode
     :mode ("\\.json\\'" . json-mode))
+#+end_src
+
+** Groovy
+#+begin_src emacs-lisp
+  (use-package groovy-mode
+    :mode
+    ("\\.gradle\\'"  . groovy-mode))
 #+end_src
 
 ** Yaml
@@ -939,97 +930,102 @@ M-x lsp-install-server <RET> ts-ls <RET>
     ("\\.yaml\\'" . yaml-mode))
 #+end_src
 
-** Elixir
+** SQL
 #+begin_src emacs-lisp
-  (use-package elixir-mode)
 #+end_src
 
 * Org-mode
 ** Default
 #+begin_src emacs-lisp
-    (defun def/org-mode-setup ()
-      (setq org-src-fontify-natively t
-        org-src-window-setup 'current-window
-        org-src-strip-leading-and-trailing-blank-lines t
-        ;; org-src-preserve-indentation t
-        org-src-tab-acts-natively t)
-      (setq org-startup-indented t)
-      ;; agenda
-      (setq org-agenda-start-with-log-mode t)
-      (setq org-log-done 'time)
-      (setq org-log-into-drawer t)
-      (setq org-agenda-files '("~/Documents/org-public/gtd.org"))
+  (defun def/org-mode-setup ()
+    (setq org-src-fontify-natively t
+      org-src-window-setup 'current-window
+      org-src-strip-leading-and-trailing-blank-lines t
+      ;; org-src-preserve-indentation t
+      org-src-tab-acts-natively t)
+    (setq org-startup-indented t)
+    ;; agenda
+    (setq org-agenda-start-with-log-mode t)
+    (setq org-log-done 'time)
+    (setq org-log-into-drawer t)
+    (setq org-agenda-files '( "~/Documents/org/gtd/gtd.org"
+                              "~/Documents/org-company/gtd/gtd.org"
+                              "~/Documents/org-roam/20220603165614-index.org"
+                              ))
 
-      (setq org-refile-targets '(;; public
-                                  ("~/Documents/org-public/gtd.org" :maxlevel . 1)
-                                  ;; private
-                                  ("~/Documents/org-private/gtd/gtd.org" :maxlevel . 1)))
+    (setq org-refile-targets '(;; private
+                                ("~/Documents/org/gtd/gtd.org" :maxlevel . 1)
+                                ;; public
+                                ("~/Documents/org-public/gtd.org" :maxlevel . 1)
+                                ;; company
+                                ("~/Documents/org-company/gtd/gtd.org" :maxlevel . 1)))
 
-      (defvar org-filelist nil "alist for files i need to open frequently. Key is a short abbrev string, Value is file path string.")
+    (defvar org-filelist nil "alist for files i need to open frequently. Key is a short abbrev string, Value is file path string.")
 
-      (setq org-filelist '(;; public
-                            ("gtd-public" . "~/Documents/org-public/gtd.org")
-                            ;; private
-                            ("gtd-private"         . "~/Documents/org-private/gtd/gtd.org")
-                            )))
+    (setq org-filelist '(;; private
+                          ("gtd" . "~/Documents/org/gtd/gtd.org")
+                          ;; company
+                          ("gtd-company" . "~/Documents/org-company/gtd/gtd.org")
+                          ("roam" . "~/Documents/org-roam/20220603165614-index.org")
+                          )))
 
-    (defun custom/jump-org-file ()
-      "Prompt to open a file from `org-filelist'. URL
-           `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
-           Version 2015-04-23"
-      (interactive)
-      (let (($abbrevCode
-              (ido-completing-read "Open:" (mapcar (lambda ($x) (car $x)) org-filelist))))
-        (find-file (cdr (assoc $abbrevCode org-filelist)))))
+  (defun custom/jump-org-file ()
+    "Prompt to open a file from `org-filelist'. URL
+         `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
+         Version 2015-04-23"
+    (interactive)
+    (let (($abbrevCode
+            (ido-completing-read "Open:" (mapcar (lambda ($x) (car $x)) org-filelist))))
+      (find-file (cdr (assoc $abbrevCode org-filelist)))))
 
-    ;; Save Org buffers after refiling!
-    (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-    (defun def/org-font-setup ()
-      (font-lock-add-keywords 'org-mode
-        '(("^ *\\([-]\\) "
-            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))
-        (dolist (face '((org-level-1 . 1.2)
-                         (org-level-2 . 1.1)
-                         (org-level-3 . 1.05)
-                         (org-level-4 . 1.0)
-                         (org-level-5 . 1.1)
-                         (org-level-6 . 1.1)
-                         (org-level-7 . 1.1)
-                         (org-level-8 . 1.1))))))
+  (defun def/org-font-setup ()
+    (font-lock-add-keywords 'org-mode
+      '(("^ *\\([-]\\) "
+          (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))
+      (dolist (face '((org-level-1 . 1.2)
+                       (org-level-2 . 1.1)
+                       (org-level-3 . 1.05)
+                       (org-level-4 . 1.0)
+                       (org-level-5 . 1.1)
+                       (org-level-6 . 1.1)
+                       (org-level-7 . 1.1)
+                       (org-level-8 . 1.1))))))
 
-    (use-package org
-      :config
-      (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-      (def/org-font-setup)
-      (def/org-mode-setup)
-      (setq org-agenda-current-time-string "← now")
-      (setq org-agenda-time-grid
-        '((daily today require-timed)
-           (0600 0700 0800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
-           " =>"
-           "────────────────"))
+  (use-package org
+    :config
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+    (def/org-font-setup)
+    (def/org-mode-setup)
+    (setq org-agenda-current-time-string "← now")
+    (setq org-agenda-time-grid
+      '((daily today require-timed)
+         (0600 0700 0800 0900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300)
+         " =>"
+         "────────────────"))
 
-      ;; Configure custom agenda views
-      (setq org-agenda-custom-commands
-        '(
-           ("d" "Dashboard"
-             ((todo "NEXT"
-                ((org-agenda-overriding-header "Next Tasks")))
-               (todo "ACTIVE"
-                 ((org-agenda-overriding-header "Active Tasks")))
-               (agenda "" ((org-deadline-warning-days 7)))))
+    ;; Configure custom agenda views
+    (setq org-agenda-custom-commands
+      '(
+         ("d" "Dashboard"
+           ((todo "NEXT"
+              ((org-agenda-overriding-header "Next Tasks")))
+             (todo "ACTIVE"
+               ((org-agenda-overriding-header "Active Tasks")))
+             (agenda "" ((org-deadline-warning-days 7)))))
 
-           ("e" tags-todo "+TODO=\"NEXT\"+Effort<30&+Effort>0"
-             ((org-agenda-overriding-header "Low Effort Tasks")
-               (org-agenda-max-todos 20)
-               (org-agenda-files org-agenda-files)))))
+         ("e" tags-todo "+TODO=\"NEXT\"+Effort<30&+Effort>0"
+           ((org-agenda-overriding-header "Low Effort Tasks")
+             (org-agenda-max-todos 20)
+             (org-agenda-files org-agenda-files)))))
 
-      (setq org-capture-templates
-        `(
-           ("t" "📄 Todo [inbox]" entry (file+headline "~/Documents/org/gtd.org" "Tasks")
-             "* TODO %i%?")
-           )))
+    (setq org-capture-templates
+      `(
+         ("t" "📄 Todo [inbox]" entry (file+headline "~/Documents/org/gtd.org" "Tasks")
+           "* TODO %i%?")
+         )))
 #+end_src
 
 ** Todo
@@ -1134,6 +1130,18 @@ M-x lsp-install-server <RET> ts-ls <RET>
     )
 #+end_src
 
+** Roam
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :after org
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+    (org-roam-directory "~/Documents/org-roam")
+    :config
+    (org-roam-setup))
+#+end_src
+
 * Keymaps
 ** general
 #+begin_src emacs-lisp
@@ -1153,27 +1161,44 @@ M-x lsp-install-server <RET> ts-ls <RET>
       :global-prefix "C-SPC")
 
     (general-define-key
-      "M-w" 'save-buffer ;; write
+      ;; "M-q" TODO
+      "M-w" 'save-buffer     ;; write
+      ;; "M-e" TODO
       "M-r" 'counsel-recentf ;; recent
-      "M-u" 'custom/toggle-transparency
-      ;; "M-o" TODO: open prefix key
+      ;; "M-t" TODO
+      ;; "M-y" TODO
+      "M-u" 'custom/toggle-transparency ;;transparency
+      ;; "M-i" TODO
+      "M-o" 'counsel-find-file ;; open file
       "M-p" 'find-file-in-project-by-selected ;; projects
 
       "M-a" 'mark-whole-buffer ;; all
-      "M-s" 'swiper ;; search
-      "M-f" 'counsel-find-file ;; files
+      "M-s" 'swiper            ;; search
+      ;; "M-d" TODO
+      ;; "M-f" TODO
+      ;; "M-g" TODO
+      ;; "M-h" TODO
+      ;; "M-j" TODO
+      ;; "M-k" TODO
+      "M-l" 'format-all-region ;; format
+      "M-;" 'yas-insert-snippet ;; company-yasnippet
+      ;; "M-'" TODO
 
-      "M-x" 'counsel-M-x
-      "M-c" 'kill-ring-save ;; c-c
-      "M-v" 'yank ;; c-v
-      "M-b" 'quick-calc ;; bc
-
+      ;; "M-z" TODO
+      "M-x" 'counsel-M-x    ; yes
+      "M-c" 'kill-ring-save ; c-c
+      "M-v" 'yank           ; c-v
+      ;; "M-b" TODO bc
+      "M-n" 'comment-dwim-insert-mode
+      ;; "M-m" TODO
+      ;; "M-," TODO
+      ;; "M-." TODO
       "M-/" 'evilnc-comment-or-uncomment-lines
 
-      ;; "M-<left>" 'drag-stuff-left
-      ;; "M-<right>" 'drag-stuff-right
-      ;; "M-<down>" 'drag-stuff-down
-      ;; "M-<up>" 'drag-stuff-up
+      "M-<left>" 'drag-stuff-left
+      "M-<right>" 'drag-stuff-right
+      "M-<down>" 'drag-stuff-down
+      "M-<up>" 'drag-stuff-up
 
       "C-x C-f" 'counsel-find-file
 
@@ -1202,17 +1227,18 @@ M-x lsp-install-server <RET> ts-ls <RET>
       "qc" '(quick-calc :which-key "Calculate")
       "ql" '(browse-url :which-key "Cussor Link")
 
-      "w"  '(:ignore t :which-key "Window")
-      "ww" '(ace-window                    :which-key "Ace")
-      "wq" '(evil-quit                     :which-key "Quit")
-      "wr" '(def/hydra-window-resize/body  :which-key "Resize")
-      "wo" '(delete-other-windows          :which-key "Only")
-      "ws" '(evil-window-split             :which-key "Split")
-      "wv" '(evil-window-vsplit            :which-key "VSplit")
-      "wh" '(evil-window-left              :which-key "Left")
-      "wj" '(evil-window-down              :which-key "Down")
-      "wk" '(evil-window-up                :which-key "Up")
-      "wl" '(evil-window-right             :which-key "Right")
+      ;; TODO
+      ;; "w"  '(:ignore t :which-key "Window")
+      ;; "ww" '(ace-window                    :which-key "Ace")
+      ;; "wq" '(delete-window                 :which-key "Quit")
+      ;; "wr" '(def/hydra-window-resize/body  :which-key "Resize")
+      ;; "wo" '(delete-other-windows          :which-key "Only")
+      ;; "ws" '(evil-window-split             :which-key "Split")
+      ;; "wv" '(evil-window-vsplit            :which-key "VSplit")
+      ;; "wh" '(evil-window-left              :which-key "Left")
+      ;; "wj" '(evil-window-down              :which-key "Down")
+      ;; "wk" '(evil-window-up                :which-key "Up")
+      ;; "wl" '(evil-window-right             :which-key "Right")
 
       "e"  '(:ignore t :which-key "Error")
       "e[" '(flycheck-error-list-previous-error :which-key "Pervious")
@@ -1265,7 +1291,7 @@ M-x lsp-install-server <RET> ts-ls <RET>
       "itm" '(custom/insert-tomorrow    :which-key "toMorrow")
       "iy"  '(yas-insert-snippet        :which-key "Ysnippet")
 
-      "u"   '(:ignore t :which-key "Utils")
+      "u"   '(:ignore t :which-key "Utils") ; TODO
 
       "o"   '(:ignore t :which-key "Org")
       "oa"  '(org-agenda                 :which-key "Agenda")
@@ -1301,13 +1327,15 @@ M-x lsp-install-server <RET> ts-ls <RET>
       "ptd" '(treemacs-remove-workspace :which-key "Delete")
       "ptr" '(treemacs-rename           :which-key "Rename")
 
+      "\\" '(counsel-projectile-rg :which-key "Rg")
+
       ;; "[" TODO: change
       "[" '(previous-buffer :which-key "Previous")
 
       ;; "]" TODO: change
       "]" '(next-buffer :which-key "Next")
 
-      "a" '(mark-whole-buffer :which-key "All")
+      "a" '(mark-whole-buffer :which-key "All") ; TODO
       ;; "a"  '(:ignore t :which-key "All")
       ;; "aa" '(mark-whole-buffer :which-key "All")
       ;; "ac" '(custom/comment-all-line :which-key "Comment")
@@ -1417,6 +1445,14 @@ M-x lsp-install-server <RET> ts-ls <RET>
       "bww" '((lambda () (interactive) (swiper-all "WARNING")) :which-key "Warning")
       "bwx" '((lambda () (interactive) (swiper-all "XXX")) :which-key "Xxx")
 
+      "n"  '(:ignore t :which-key "note")
+      "nn" '((lambda () (interactive) (find-file (expand-file-name "~/org-roam/20220603165614-index.org"))) :which-key "Index")
+      "nf"  '(org-roam-node-find            :which-key "Find")
+      "ni"  '(org-roam-node-insert          :which-key "Insert")
+      "no"  '(org-roam-node-open            :which-key "Open")
+      "nj"  '(custom/org-open-current-frame :which-key "Insde")
+      "nk"  '(org-mark-ring-goto            :which-key "Outside")
+
       "m"  '(:ignore t :which-key "bookMarks")
       "mm" '(bm-toggle :which-key "Toggle")
       "ma" '(bm-show :which-key "show All(current buffer)")
@@ -1490,13 +1526,25 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (progn
       ;; normal mode
       (define-key evil-normal-state-map "u" 'undo-tree-undo)
-      (define-key evil-normal-state-map "\\" 'counsel-projectile-rg)
+      (define-key evil-normal-state-map "\\" 'rg)
 
       (define-key evil-normal-state-map "gd" 'lsp-find-definition)
       (define-key evil-normal-state-map "gr" 'lsp-find-references)
       (define-key evil-normal-state-map "gi" 'lsp-find-implementation)
-      (define-key evil-normal-state-map "g[" 'git-gutter:next-hunk)
+      (define-key evil-normal-state-map "g[" 'git-gutter:previous-hunk)
       (define-key evil-normal-state-map "g]" 'git-gutter:next-hunk)
+
+      (define-key evil-normal-state-map "w" 'nil)
+      (define-key evil-normal-state-map "ww" 'ace-window)
+      (define-key evil-normal-state-map "wq" 'delete-window)
+      (define-key evil-normal-state-map "wr" 'def/hydra-window-resize/body)
+      (define-key evil-normal-state-map "wo" 'delete-other-windows)
+      (define-key evil-normal-state-map "ws" 'evil-window-split)
+      (define-key evil-normal-state-map "wv" 'evil-window-vsplit)
+      (define-key evil-normal-state-map "wh" 'evil-window-left)
+      (define-key evil-normal-state-map "wj" 'evil-window-down)
+      (define-key evil-normal-state-map "wk" 'evil-window-up)
+      (define-key evil-normal-state-map "wl" 'evil-window-right)
 
       (define-key evil-normal-state-map "s" 'nil)
       (define-key evil-normal-state-map "ss" 'avy-goto-char-2)
@@ -1513,7 +1561,10 @@ M-x lsp-install-server <RET> ts-ls <RET>
       (define-key evil-normal-state-map "s]" 'avy-next)
 
       (define-key evil-normal-state-map (kbd "C-r") 'undo-tree-redo)
+      (define-key evil-normal-state-map (kbd "C-u") 'zz-scroll-half-page-up)
       (define-key evil-normal-state-map (kbd "C-p") 'find-file-in-project)
+
+      (define-key evil-normal-state-map (kbd "C-d") 'zz-scroll-half-page-down)
 
       (define-key evil-normal-state-map (kbd "C-s") 'swiper)
 
@@ -1533,14 +1584,14 @@ M-x lsp-install-server <RET> ts-ls <RET>
       (define-key evil-visual-state-map "s]" 'avy-next)
 
       ;; insert mode
+      (define-key evil-insert-state-map (kbd "M-;") 'company-yasnippet)
+
       (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
       (define-key evil-insert-state-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
 
       (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
       (define-key evil-insert-state-map (kbd "C-s") 'counsel-M-x)
       (define-key evil-insert-state-map (kbd "C-h") 'delete-backward-char)
-
-      (define-key evil-insert-state-map (kbd "C-;") 'company-yasnippet)
 
       (define-key evil-insert-state-map (kbd "C-ㅈ") 'evil-delete-backward-word)
       (define-key evil-insert-state-map (kbd "C-ㅗ") 'delete-backward-char)
@@ -1627,6 +1678,42 @@ M-x lsp-install-server <RET> ts-ls <RET>
 #+end_src
 
 * Functions
+** Comment
+#+begin_src emacs-lisp
+  (defun comment-dwim-insert-mode (&optional arg)
+    (interactive "*P")
+    (evil-insert-state)
+    (comment-dwim arg))
+#+end_src
+
+** Evil
+*** Movement
+#+begin_src emacs-lisp
+  (defun zz-scroll-half-page (direction)
+    "Scrolls half page up if `direction' is non-nil, otherwise will scroll half page down."
+    (let ((opos (cdr (nth 6 (posn-at-point)))))
+      ;; opos = original position line relative to window
+      (move-to-window-line nil)  ;; Move cursor to middle line
+      (if direction
+        (recenter-top-bottom -1)  ;; Current line becomes last
+        (recenter-top-bottom 0))  ;; Current line becomes first
+      (move-to-window-line opos)))  ;; Restore cursor/point position
+
+  (defun zz-scroll-half-page-down ()
+    "Scrolls exactly half page down keeping cursor/point position."
+    (interactive)
+    (zz-scroll-half-page nil)
+    (evil-window-middle)
+    )
+
+  (defun zz-scroll-half-page-up ()
+    "Scrolls exactly half page up keeping cursor/point position."
+    (interactive)
+    (zz-scroll-half-page t)
+    (evil-window-middle)
+    )
+#+end_src
+
 ** File
 *** Name
 #+begin_src emacs-lisp
@@ -2457,15 +2544,5 @@ M-x lsp-install-server <RET> ts-ls <RET>
       (delete-region start end)
       (insert (s-dashed-words sentence))
       ))
-#+end_src
-
-hello_hloo
-
-* Deprecated
-** Drag-stuff package
-#+begin_src emacs-lisp
-  ;; (use-package drag-stuff
-  ;;   :config
-  ;;   (drag-stuff-global-mode))
 #+end_src
 
