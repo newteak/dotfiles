@@ -1,0 +1,12 @@
+#!/bin/sh
+
+RELATED_LINK=`rg "\[\[$1\]\]" \
+| rg -v "related link" \
+| rg "\.md" \
+| sed 's/\.md.*//' \
+| sed 's/^/[[/' \
+| sed 's/$/]]/' \
+| sed ':a;N;s/\n/, /g;ba'`
+
+sed -i -e "s|^related link.*|related link : $RELATED_LINK|" "$2"
+

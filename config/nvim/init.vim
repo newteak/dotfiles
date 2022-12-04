@@ -1,6 +1,7 @@
 " Plugins Section
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
   " Write
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'tommcdo/vim-lion'
   Plug 'tpope/vim-commentary'
@@ -12,6 +13,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 
   " Utils
   Plug 'airblade/vim-gitgutter'
+  Plug 'APZelos/blamer.nvim'
   Plug 'easymotion/vim-easymotion'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -61,6 +63,14 @@ endif
 let g:gitgutter_map_keys=0
 let g:gitgutter_set_sign_backgrounds=0
 
+" plugin name: blamer
+let g:blamer_enabled = 1
+let g:blamer_delay = 0
+let g:blamer_show_in_visual_modes = 0
+let g:blamer_show_in_insert_modes = 0
+let g:blamer_date_format = '%y/%m/%d %H:%M'
+let g:blamer_prefix = ' > '
+
 " plugin name: vim-highlightedyank
 let g:highlightedyank_highlight_duration=150
 highlight HighlightedyankRegion cterm=reverse gui=reverse
@@ -79,6 +89,12 @@ let g:vimwiki_list=[
     \   'path': '~/Documents/wiki/',
     \   'syntax' : 'markdown',
     \   'ext' : '.md',
+    \   'diary_rel_path': './today',
+    \},
+    \{
+    \   'path': '~/Documents/wiki-company/',
+    \   'syntax' : 'markdown',
+    \   'ext' : '.md',
     \   'index' : 'index',
     \   'diary_rel_path': './today',
     \},
@@ -87,6 +103,9 @@ let g:vimwiki_list=[
 let g:auto_template_list = [
     \{
     \   'path': '~/Documents/wiki/',
+    \},
+    \{
+    \   'path': '~/Documents/wiki-company/',
     \},
 \]
 
@@ -105,8 +124,8 @@ augroup vimwikiauto
     autocmd FileType vimwiki inoremap <C-s> <C-r>=vimwiki#tbl#kbd_tab()<CR>
     " <C-a> move table column to left
     autocmd FileType vimwiki inoremap <C-a> <Left><C-r>=vimwiki#tbl#kbd_shift_tab()<CR>
-    " disable tab
-    au filetype vimwiki silent! iunmap <buffer> <Tab>
+    " diabled tab
+    autocmd filetype vimwiki silent! iunmap <buffer> <Tab>
 augroup END
 
 autocmd FileType vimwiki nnoremap <C-h> :VimwikiGoBackLink<CR>
@@ -145,13 +164,14 @@ function! NewTemplate()
 
     let l:template = []
     call add(l:template, '---')
-    call add(l:template, 'title      : "' . expand('%:t:r') . expand('"'))
-    call add(l:template, 'summary    : "' . expand('%:t:r') . expand('"'))
-    call add(l:template, 'date       : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
-    call add(l:template, 'lastmod    : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
-    call add(l:template, 'tags       : [""]')
-    call add(l:template, 'categories : [""]')
-    call add(l:template, 'draft      : true')
+    call add(l:template, 'title        : "' . expand('%:t:r') . expand('"'))
+    call add(l:template, 'summary      : "' . expand('%:t:r') . expand('"'))
+    call add(l:template, 'date         : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
+    call add(l:template, 'lastmod      : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
+    call add(l:template, 'related links :')
+    call add(l:template, 'tags         : [""]')
+    call add(l:template, 'categories   : [""]')
+    call add(l:template, 'draft        : true')
     call add(l:template, '---')
     call add(l:template, '')
     call setline(1, l:template)
@@ -161,8 +181,13 @@ function! NewTemplate()
     echom 'new wiki page has created'
 endfunction
 
+function! UdpateRelatedLinks()
+    execute 'silent !related_link' '"%:t:r"' '"%:p"'
+endfunction
+
 augroup vimwikiauto
     autocmd BufWritePre *wiki*/*.md call LastModified()
+    autocmd BufWritePost *wiki*/*.md call UdpateRelatedLinks()
     autocmd BufRead,BufNewFile *wiki*/*.md call NewTemplate()
 augroup END
 
@@ -299,6 +324,8 @@ autocmd BufNewFile,BufRead *.msg set filetype=message
 
 " set indent by filetype
 autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType go setlocal tabstop=4 noexpandtab
 
 " https://github.com/vim/vim/blob/v8.2.0/runtime/indent/html.vim#L217-L220
@@ -447,6 +474,10 @@ vmap <silent> sl <Plug>(easymotion-wl)
 nmap <silent> s. <Plug>(easymotion-repeat)
 vmap <silent> s. <Plug>(easymotion-repeat)
 
+" Fix cursor on middle of screen
+nnoremap <C-d> <C-d>M
+nnoremap <C-u> <C-u>M
+
 " "g" is vim's goto func.
 nnoremap <silent> g[ :GitGutterPrevHunk<CR>
 nnoremap <silent> g] :GitGutterNextHunk<CR>
@@ -472,6 +503,8 @@ nmap <leader>vi <Plug>VimwikiDiaryIndex
 nmap <leader>v<leader>v <Plug>VimwikiMakeDiaryNote
 nmap <leader>v<leader>i <Plug>VimwikiDiaryGenerateLinks
 nmap <leader>vt :VimwikiTable<CR>
+nmap <Leader>vl <Plug>VimwikiToggleListItem
+vmap <Leader>vl <Plug>VimwikiToggleListItem
 
 nnoremap <silent> <leader>b :Buffers<cr>
 
