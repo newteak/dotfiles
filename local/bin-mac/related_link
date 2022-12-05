@@ -5,6 +5,7 @@ rg "\[\[$1\]\]" \
 | rg -v "related link" \
 | rg "\.md" \
 | sed 's/\.md.*//' \
+| sed 's/^.*\///' \
 | sed 's/^/[[/' \
 | sed 's/$/]]/' \
 | xargs \
