@@ -7,6 +7,7 @@ rg "\[\[$1\]\]" \
 | sed 's/\.md.*//' \
 | sed 's/^/[[/' \
 | sed 's/$/]]/' \
-| sed 'N;s/\n/, /'`
+| xargs \
+| sed -e 's/ /, /g'`
 
 sed -i "" "s|^related link.*|related link : $RELATED_LINK|" "$2"

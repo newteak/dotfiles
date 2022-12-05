@@ -105,6 +105,12 @@ let g:auto_template_list = [
     \   'path': '~/Documents/wiki/',
     \},
     \{
+    \   'path': '~/Documents/wiki/exercise/',
+    \},
+    \{
+    \   'path': '~/Documents/wiki/exercise/',
+    \},
+    \{
     \   'path': '~/Documents/wiki-company/',
     \},
 \]
@@ -125,7 +131,7 @@ augroup vimwikiauto
     " <C-a> move table column to left
     autocmd FileType vimwiki inoremap <C-a> <Left><C-r>=vimwiki#tbl#kbd_shift_tab()<CR>
     " diabled tab
-    autocmd filetype vimwiki silent! iunmap <buffer> <Tab>
+    autocmd FileType vimwiki silent! iunmap <buffer> <Tab>
 augroup END
 
 autocmd FileType vimwiki nnoremap <C-h> :VimwikiGoBackLink<CR>
@@ -168,7 +174,7 @@ function! NewTemplate()
     call add(l:template, 'summary      : "' . expand('%:t:r') . expand('"'))
     call add(l:template, 'date         : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
     call add(l:template, 'lastmod      : ' . strftime('%Y-%m-%d %H:%M:%S+0900'))
-    call add(l:template, 'related links :')
+    call add(l:template, 'related link :')
     call add(l:template, 'tags         : [""]')
     call add(l:template, 'categories   : [""]')
     call add(l:template, 'draft        : true')
