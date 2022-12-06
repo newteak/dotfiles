@@ -111,10 +111,16 @@ let g:auto_template_list = [
     \   'path': '~/Documents/wiki/computer/',
     \},
     \{
+    \   'path': '~/Documents/wiki/exercise/',
+    \},
+    \{
     \   'path': '~/Documents/wiki/cook/',
     \},
     \{
-    \   'path': '~/Documents/wiki/exercise/',
+    \   'path': '~/Documents/wiki/movie/',
+    \},
+    \{
+    \   'path': '~/Documents/wiki/music/',
     \},
     \{
     \   'path': '~/Documents/wiki-company/',
