@@ -105,9 +105,6 @@ let g:auto_template_list = [
     \   'path': '~/Documents/wiki/',
     \},
     \{
-    \   'path': '~/Documents/wiki/today/',
-    \},
-    \{
     \   'path': '~/Documents/wiki/computer/',
     \},
     \{
@@ -530,8 +527,6 @@ nmap <leader>vi <Plug>VimwikiDiaryIndex
 nmap <leader>v<leader>v <Plug>VimwikiMakeDiaryNote
 nmap <leader>v<leader>i <Plug>VimwikiDiaryGenerateLinks
 nmap <leader>vt :VimwikiTable<CR>
-nmap <Leader>vl <Plug>VimwikiToggleListItem
-vmap <Leader>vl <Plug>VimwikiToggleListItem
 
 nnoremap <silent> <leader>b :Buffers<cr>
 
