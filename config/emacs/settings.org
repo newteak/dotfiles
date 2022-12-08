@@ -182,7 +182,10 @@ I don't like stun grenade.
 ** rg & wgrep
 #+begin_src emacs-lisp
   (use-package rg)
-  (use-package wgrep)
+  (use-package wgrep
+    :config
+    (wgrep-auto-save-buffer t)
+    )
 #+end_src
 
 ** flyspell-corret package
@@ -825,6 +828,7 @@ M-x lsp-install-server <RET> ts-ls <RET>
        js2-mode        ;; javascript
        sh-mode         ;; sh/bash
        typescript-mode ;; typescript
+       python-mode     ;; python
        web-mode        ;; html/css/javascript
        ) . lsp-deferred))
 
@@ -846,10 +850,26 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (setq lsp-treemacs-symbols-position-params `((side . right) (slot . 2) (window-width . 30))))
 #+end_src
 
-** Shell
 ** C
 #+begin_src emacs-lisp
   (setq-default c-basic-offset 4)
+#+end_src
+
+** Rust
+** Python
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :ensure t
+    :hook
+    (python-mode . (lambda ()
+                     (require 'lsp-pyright)
+                     (lsp))))
+
+  (add-hook 'python-mode-hook
+    '(lambda ()
+       (setq python-indent 2)
+       (setq indent-tabs-mod nil)
+       ))
 #+end_src
 
 ** JavaScript
@@ -874,18 +894,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (setq typescript-indent-level 2))
 #+end_src
 
-** Web
-#+begin_src emacs-lisp
-  (use-package web-mode
-    :mode
-    (("\\.html\\'" . web-mode))
-    :custom
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-code-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    )
-#+end_src
-
 ** Elixir
 #+begin_src emacs-lisp
   (use-package elixir-mode)
@@ -904,6 +912,19 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (setq slime-contribs '(slime-fancy slime-quicklisp)))
 #+end_src
 
+** Web
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :mode
+    (("\\.html\\'" . web-mode))
+    :custom
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    )
+#+end_src
+
+** Shell
 ** CSS
 #+begin_src emacs-lisp
   (setq css-indent-offset 2)
@@ -971,8 +992,8 @@ M-x lsp-install-server <RET> ts-ls <RET>
 
   (defun custom/jump-org-file ()
     "Prompt to open a file from `org-filelist'. URL
-         `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
-         Version 2015-04-23"
+           `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
+           Version 2015-04-23"
     (interactive)
     (let (($abbrevCode
             (ido-completing-read "Open:" (mapcar (lambda ($x) (car $x)) org-filelist))))
