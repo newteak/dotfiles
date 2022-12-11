@@ -1,25 +1,22 @@
 " Plugins Section
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
   " Write
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'tommcdo/vim-lion'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-speeddating'
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-endwise'
-  Plug 'jiangmiao/auto-pairs'
+
+  " Language
+  Plug 'elixir-editors/vim-elixir'
 
   " Utils
   Plug 'airblade/vim-gitgutter'
-  Plug 'APZelos/blamer.nvim'
   Plug 'easymotion/vim-easymotion'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
-  Plug 'junegunn/goyo.vim'
   Plug 'mattesgroeger/vim-bookmarks'
-  Plug 'preservim/nerdtree'
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
   Plug 'vim-scripts/fcitx.vim'
   Plug 'preservim/tagbar'
@@ -34,14 +31,19 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'ryanoasis/vim-devicons'
   Plug 'Yggdroot/indentLine'
+
+  " DEPRECATED
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'jiangmiao/auto-pairs'
+  " Plug 'tpope/vim-endwise'
+  " Plug 'APZelos/blamer.nvim'
+  " Plug 'preservim/nerdtree'
+  " Plug 'junegunn/goyo.vim'
 call plug#end()
 
 " plugin name: easymotion
 let g:EasyMotion_do_mapping=0
 let g:EasyMotion_smartcase=1
-
-" plugin name: nerdtree
-let NERDTreeQuitOnOpen=1
 
 " plugin name: ultisnips
 let g:UltiSnipsExpandTrigger="<TAB>"
@@ -63,14 +65,6 @@ endif
 let g:gitgutter_map_keys=0
 let g:gitgutter_set_sign_backgrounds=0
 
-" plugin name: blamer
-let g:blamer_enabled = 1
-let g:blamer_delay = 0
-let g:blamer_show_in_visual_modes = 0
-let g:blamer_show_in_insert_modes = 0
-let g:blamer_date_format = '%y/%m/%d %H:%M'
-let g:blamer_prefix = ' > '
-
 " plugin name: vim-highlightedyank
 let g:highlightedyank_highlight_duration=150
 highlight HighlightedyankRegion cterm=reverse gui=reverse
@@ -79,9 +73,6 @@ highlight HighlightedyankRegion cterm=reverse gui=reverse
 let g:indentLine_showFirstIndentLevel = 0
 let g:indentLine_fileTypeExclude = ["vimwiki", "help", "undotree", "diff"]
 let g:indentLine_char = '|'
-
-" plugin name: nerdtree
-let NERDTreeQuitOnOpen=1
 
 " plugin name: vim-wiki
 let g:vimwiki_list=[
@@ -225,20 +216,6 @@ augroup END
 
 " plugin name: vim-better-whitespace
 let g:better_whitespace_enabled=1
-
-" plugin name: goyo
-function! s:goyo_enter()
-  imap <ESC> <ESC>zz
-  IndentGuidesDisable
-endfunction
-
-function! s:goyo_leave()
-  imap <ESC> <ESC>
-  IndentGuidesEnable
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Set Section
 set nocompatible
@@ -554,7 +531,7 @@ inoremap , ,<C-g>u
 inoremap . .<C-g>u
 inoremap ? ?<C-g>u
 
-nnoremap <silent> <leader>. :NERDTreeFind<CR>
+nnoremap <silent> <leader>. :e.<CR>
 nnoremap <silent> <leader>, :e $XDG_CONFIG_HOME/nvim/init.vim<CR>
 
 " Bookmarks
@@ -567,11 +544,40 @@ nmap <silent> <leader>m[ <Plug>BookmarkPrev
 
 nnoremap <silent> <F1> :h <C-r>=expand("<cword>")<CR>
 vnoremap <silent> <F1> y :h <C-r>0
-nnoremap <silent> <F2> :NERDTreeToggle<CR>
-nnoremap <silent> <leader><F2> :NERDTreeFind<CR>
+nnoremap <silent> <F2> :e.<CR>
 nnoremap <silent> <F3> :Lines TODO<CR>
 nnoremap <silent> <F4> :UltiSnipsEdit<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
-nnoremap <silent> <F11> :Goyo<cr>
 nnoremap <silent> <F12> <C-z>
 
+" DEPRECATED
+
+" " plugin name: nerdtree
+" let NERDTreeQuitOnOpen=1
+
+" " plugin name: blamer
+" let g:blamer_enabled = 1
+" let g:blamer_delay = 0
+" let g:blamer_show_in_visual_modes = 0
+" let g:blamer_show_in_insert_modes = 0
+" let g:blamer_date_format = '%y/%m/%d %H:%M'
+" let g:blamer_prefix = ' > '
+
+" " plugin name: goyo
+" function! s:goyo_enter()
+"   imap <ESC> <ESC>zz
+"   IndentGuidesDisable
+" endfunction
+
+" function! s:goyo_leave()
+"   imap <ESC> <ESC>
+"   IndentGuidesEnable
+" endfunction
+
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" nnoremap <silent> <F11> :Goyo<cr>
+
+" nnoremap <silent> <F2> :NERDTreeToggle<CR>
+" nnoremap <silent> <leader><F2> :NERDTreeFind<CR>
