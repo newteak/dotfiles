@@ -117,9 +117,6 @@ let g:auto_template_list = [
     \   'path': '~/Documents/wiki/exercise/',
     \},
     \{
-    \   'path': '~/Documents/wiki/movie/',
-    \},
-    \{
     \   'path': '~/Documents/wiki/music/',
     \},
     \{
