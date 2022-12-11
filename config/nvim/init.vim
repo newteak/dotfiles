@@ -240,9 +240,6 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-" plugin name: winresizer
-let g:winresizer_start_key = '<C-w><C-r>'
-
 " Set Section
 set nocompatible
 
@@ -435,6 +432,24 @@ nnoremap <leader><SPACE> :
 vnoremap <leader><SPACE> :
 
 nnoremap <silent> Q <nop>
+
+" Window
+nnoremap <silent> w <nop>
+
+nnoremap ww <C-w><C-w>
+nnoremap wv <C-w><C-v>
+nnoremap ws <C-w><C-s>
+
+nnoremap wq <C-w><C-c>
+nnoremap wo <C-w><C-o>
+
+nnoremap wh <C-w><C-h>
+nnoremap wj <C-w><C-j>
+nnoremap wk <C-w><C-k>
+nnoremap wl <C-w><C-l>
+
+" plugin name: winresizer
+let g:winresizer_start_key = 'wr'
 
 " RELOAD
 nnoremap <leader>R :source $XDG_CONFIG_HOME/nvim/init.vim<CR>
