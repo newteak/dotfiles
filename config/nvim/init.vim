@@ -314,8 +314,6 @@ if has("persistent_undo")
   endif
 endif
 
-set signcolumn=yes:1
-
 set listchars=tab:→\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%,space:·
 set showbreak=↪
 set list
@@ -372,12 +370,16 @@ set t_Co=256
 let g:gruvbox_termcolors=256
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_transparent_bg=1
+let g:gitgutter_override_sign_column_highlight=1
 colorscheme gruvbox
 set background=dark
 
 set colorcolumn=81
 highlight ColorColumn cterm=NONE ctermbg=236 ctermfg=red guibg=#3c3839 guifg=#ff0000
+
+set signcolumn=yes:1
 highlight SignColumn cterm=NONE ctermbg=NONE ctermfg=NONE
+
 highlight Comment ctermfg=green
 
 highlight BookmarkSign    ctermbg=NONE ctermfg=160 guibg=NONE guifg=#ff0000
