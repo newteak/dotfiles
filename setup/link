@@ -55,6 +55,9 @@ if [[ "$OSTYPE" == "linux"* ]]; then
     ln -sf "$DOT_CONFIG_DIR"/x11/xprofile "${XDG_CONFIG_HOME:-$HOME/.config}"/x11/xprofile
     ln -sf "$DOT_CONFIG_DIR"/x11/xresources "${XDG_CONFIG_HOME:-$HOME/.config}"/x11/xresources
 
+    [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}"/yt-dlp ] && mkdir "${XDG_CONFIG_HOME:-$HOME/.config}"/yt-dlp
+    ln -sf "$DOT_CONFIG_DIR"/yt-dlp/config "${XDG_CONFIG_HOME:-$HOME/.config}"/yt-dlp/config
+
     [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}"/youtube-dl ] && mkdir "${XDG_CONFIG_HOME:-$HOME/.config}"/youtube-dl
     ln -sf "$DOT_CONFIG_DIR"/youtube-dl/config "${XDG_CONFIG_HOME:-$HOME/.config}"/youtube-dl/config
 
