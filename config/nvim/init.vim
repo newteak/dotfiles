@@ -324,15 +324,6 @@ autocmd FileType go setlocal tabstop=4 noexpandtab
 " https://github.com/vim/vim/blob/v8.2.0/runtime/indent/html.vim#L217-L220
 let g:html_indent_inctags = 'p'
 
-" vim visual star search
-xnoremap * :<C-u>call <SID>VisualSetSearch('/')<CR>/<C-R>=@/<CR><CR>
-function! s:VisualSetSearch(cmdtype)
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-  let @s = temp
-endfunction
-
 augroup format_options
   autocmd!
   autocmd BufEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -581,3 +572,14 @@ nnoremap <silent> <F12> <C-z>
 
 " nnoremap <silent> <F2> :NERDTreeToggle<CR>
 " nnoremap <silent> <leader><F2> :NERDTreeFind<CR>
+
+" nvim defualt
+" vim visual star search
+" xnoremap * :<C-u>call <SID>VisualSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+" function! s:VisualSetSearch(cmdtype)
+"   let temp = @s
+"   norm! gv"sy
+"   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+"   let @s = temp
+" endfunction
+
