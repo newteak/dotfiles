@@ -9,6 +9,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
   Plug 'tpope/vim-surround'
 
   " Language
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-editors/vim-elixir'
 
   " Utils
@@ -33,7 +34,6 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
   Plug 'Yggdroot/indentLine'
 
   " DEPRECATED
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
   " Plug 'jiangmiao/auto-pairs'
   " Plug 'tpope/vim-endwise'
   " Plug 'APZelos/blamer.nvim'
