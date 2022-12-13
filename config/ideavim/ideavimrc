@@ -43,31 +43,32 @@ nnoremap <leader>qt :action $EditorTranslateAction<CR>
 nnoremap <leader>qu :action FindUsages<CR>
 
 " <w> <Window>
+nnoremap w <Nop>
 " Quit
-nnoremap <silent> <leader>wq :q<CR>
+nnoremap <silent> wq :q<CR>
 " Move Cycle
-nnoremap <silent> <leader>ww <C-w><C-w>
+nnoremap <silent> ww <C-w><C-w>
 " Move h
-nnoremap <silent> <leader>wh <C-w>h
+nnoremap <silent> wh <C-w>h
 " Move j
-nnoremap <silent> <leader>wj <C-w>j
+nnoremap <silent> wj <C-w>j
 " Move k
-nnoremap <silent> <leader>wk <C-w>k
+nnoremap <silent> wk <C-w>k
 " Move l
-nnoremap <silent> <leader>wl <C-w>l
+nnoremap <silent> wl <C-w>l
 " Split
-nnoremap <silent> <leader>ws <C-w>s<C-w>j
+nnoremap <silent> ws <C-w>s<C-w>j
 " V split
-nnoremap <silent> <leader>wv <C-w>v<C-w>l
-" Only
-nnoremap <silent> <leader>wo :action HideAllWindows<CR>
+nnoremap <silent> wv <C-w>v<C-w>l
+" " Only
+" nnoremap <silent> wo :action HideAllWindows<CR>
 
 " <e> <Error>
 " like Emacs
 inoremap <C-e> <End>
-" Acitve Error tab
+" Active Error tab
 nnoremap <silent> <leader>ee :action ActivateProblemsViewToolWindow<CR>
-" Error Details
+" Error Description
 nnoremap <silent> <leader>ed :action ShowErrorDescription<CR>
 " Error previous
 nnoremap <silent> <leader>e[ :action GotoPreviousError<CR>
@@ -83,6 +84,7 @@ nnoremap <leader>rr :action Refactorings.QuickListPopupAction<CR>
 vnoremap <leader>rv :action IntroduceVariable<CR>
 " Name
 nnoremap <leader>rn :action RenameElement<CR>
+vnoremap <leader>rn :action RenameElement<CR>
 " Method
 vnoremap <leader>rm :action ExtractMethod<CR>
 " Reload vimrc
@@ -95,8 +97,6 @@ nnoremap <leader>tw :action EditorToggleUseSoftWraps<CR>
 nnoremap <leader>ti :action IndentRainbow.Toggle<CR>
 " FullScreen
 nnoremap <leader>tf :action ToggleFullScreen<CR>
-" Highlight
-nnoremap <C-l> :nohl<CR>
 " inLine
 nnoremap <leader>tl :action ToggleInlineHintsAction<CR>
 
@@ -110,33 +110,33 @@ vnoremap <leader>y "+y
 
 " <u> <???>
 
-" <i> <Insert>
-" All Path
-nnoremap <leader>ip :action CopyAbsolutePath<CR>:action EditorPaste<CR>
-" File name
-nnoremap <leader>if :action CopyFileName<CR>:action EditorPaste<CR>
-" TODO Date
-" TODO Time
+" <i> <???>
 
 " <o> <Open>
-" Back
-nnoremap <leader>ob :action ShowProcessWindow<CR>
+" background Tasks
+nnoremap <leader>ot :action ShowProcessWindow<CR>
 " Database
 nnoremap <leader>od :action ActivateDatabaseToolWindow<CR>
 " Finder
 nnoremap <leader>of :action RevealIn<CR>
+" deBug
+nnoremap <leader>ob :action ActivateDebugToolWindow<CR>
+" bookMarks
+nnoremap <leader>om :action ActivateBookmarksToolWindow<CR>
+
 " Gradle
 nnoremap <leader>og :action ActivateGradleToolWindow<CR>
+
 " Npm
 nnoremap <leader>on :action ActivatenpmToolWindow<CR>
-" Terminal
-nnoremap <leader>ot :action Terminal.OpenInTerminal<CR>
+
+" " Terminal
+" nnoremap <leader>ot :action Terminal.OpenInTerminal<CR>
 
 " <p> <Paste>
 nnoremap <C-p> :action SearchEverywhere<CR>
 vnoremap <C-p> <ESC>:action SearchEverywhere<CR>
 inoremap <C-S-p> <ESC>:action HippieCompletion<CR>a
-
 " System Clipboard Paste
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
@@ -153,10 +153,10 @@ onoremap ]] :action MethodDown<CR>
 nnoremap <leader>] :action NextTab<CR>
 vnoremap <leader>] :action NextTab<CR>
 
-" <a> <All>
-inoremap <C-a> <Home>
-nnoremap <leader>a :action $SelectAll<CR>
-vnoremap <leader>a :action $SelectAll<CR>
+" <a> <???>
+inoremap <C-a> <Home> " like emacs
+" nnoremap <leader>a :action $SelectAll<CR>
+" vnoremap <leader>a :action $SelectAll<CR>
 
 " <s> <Search>
 nnoremap s <Nop>
@@ -191,7 +191,7 @@ vnoremap <leader>sp :action FindInPath<CR>
 
 " <d> <Debug>
 " Run Debug
-nnoremap <leader>dd :action DebugClass<CR>
+" nnoremap <leader>dd :action DebugClass<CR>
 " Breakpoint Toggle
 nnoremap <leader>dt :action ToggleLineBreakpoint<CR>
 " Window
@@ -214,6 +214,9 @@ nnoremap <leader>fn :action GotoFile<CR>
 nnoremap <leader>f, :e ~/.config/dotfiles/config/ideavim/ideavimrc<CR>
 
 " <g> <Git>
+" Comment
+nnoremap gc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR>
 " Go to Definition
 nnoremap gd :action GotoDeclaration<CR>
 " Go to Implementation
@@ -257,23 +260,24 @@ nnoremap <C-j> i<CR><ESC>
 " vnoremap <leader>k 7k
 
 " <l>
-nnoremap <C-j> :nohl<CR>
+" Highlight
+nnoremap <C-l> :nohl<CR>
 " nnoremap <leader>l $
 " vnoremap <leader>l $
 
 " <;>
 nnoremap <leader>; :
 vnoremap <leader>; :
-nnoremap <C-;> :action InsertLiveTemplate<CR>i
+nnoremap <C-;> :action InsertLiveTemplate<CR>
 vnoremap <C-;> :action InsertLiveTemplate<CR>i
 inoremap <C-;> <ESC>:action InsertLiveTemplate<CR>i
 
-" <'>
+" <'> <???>
 
 " <\>
 nnoremap \ :action FindInPath<CR>
 
-" <z>
+" <z> <???>
 
 " <x> <Run>
 " M-x run current file
@@ -294,9 +298,6 @@ vnoremap <leader>xl :action ReformatCode<CR>
 nnoremap <leader>xr :action Rerun<CR>
 
 " <c> <Clipboard & Comment>
-" Comment
-nnoremap gc :action CommentByLineComment<CR>
-vnoremap gc :action CommentByLineComment<CR>
 " Path
 " Absolute
 nnoremap <leader>cpa :action CopyAbsolutePath<CR>
@@ -348,7 +349,7 @@ nnoremap <leader>m] :action GotoNextBookmark<CR>
 " </>
 
 " <`> last window
-nnoremap <silent> <leader>` :action JumpToLastWindow<CR>
+nnoremap <silent> <leader>` ^
 
 " <1>
 
