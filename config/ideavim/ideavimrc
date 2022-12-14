@@ -316,15 +316,14 @@ nnoremap <leader>m] :action GotoNextBookmark<CR>
 " <`> last window
 nnoremap <silent> <leader>` <C-S-6>
 
-" <F1> File Finder
-nnoremap <F1> :NERDTree<CR>
-nnoremap <leader><F1> :NERDTreeFind<CR>
+" <F2> File Finder
+nnoremap <F2> :NERDTree<CR>
+nnoremap <leader><F2> :NERDTreeFind<CR>
 
-" <F2> Bookmarks
-nnoremap <F2> :action ActivateBookmarksToolWindow<CR>
 
-" <F3> TODO
+" <F3> TODO & Bookmarks
 nnoremap <F3> :action ActivateTODOToolWindow<CR>
+nnoremap <leader><F3> :action ActivateBookmarksToolWindow<CR>
 
 " <F4> Snippet
 vnoremap <F4> :action SaveAsTemplate<cr>
