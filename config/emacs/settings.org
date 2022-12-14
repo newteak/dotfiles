@@ -1151,6 +1151,32 @@ M-x lsp-install-server <RET> ts-ls <RET>
     (org-roam-setup))
 #+end_src
 
+* Terminal
+** term
+#+begin_src emacs-lisp
+  (use-package term
+    :commands term
+    :config
+    (setq explicit-shell-file-name "zsh"))
+
+  (use-package eterm-256color
+    :hook (term-mode . eterm-256color-mode))
+#+end_src
+
+** vterm
+#+begin_src emacs-lisp
+  (use-package vterm
+    :commands vterm
+    :config
+    (setq vterm-shell "zsh")
+    (setq vterm-max-scrollback 10000))
+#+end_src
+
+** multi-vterm
+#+begin_src emacs-lisp
+  (use-package multi-vterm)
+#+end_src
+
 * Keymaps
 ** general
 #+begin_src emacs-lisp
