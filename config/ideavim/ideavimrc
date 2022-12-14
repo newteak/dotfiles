@@ -184,15 +184,6 @@ vmap sj <Plug>(easymotion-j)
 nmap sl <Plug>(easymotion-wl)
 vmap sl <Plug>(easymotion-wl)
 
-nnoremap <leader>ss :action Find<CR>
-vnoremap <leader>ss :action Find<CR>
-nnoremap <leader>sg :action FindInPath<CR>
-vnoremap <leader>sg :action FindInPath<CR>
-nnoremap <leader>st :action ActivateTODOToolWindow<CR>
-vnoremap <leader>st :action ActivateTODOToolWindow<CR>
-nnoremap <leader>sp :action FindInPath<CR>
-vnoremap <leader>sp :action FindInPath<CR>
-
 " <d> <Debug>
 nnoremap <C-d> <C-d>zz
 " Window
@@ -207,6 +198,10 @@ nnoremap <leader>dl :action ViewBreakpoints<CR>
 " <f> <Find>
 " Name
 nnoremap <leader>ff :action GotoFile<CR>
+" Symbol
+nnoremap <leader>fs :action GotoSymbol<CR>
+" Class
+nnoremap <leader>fc :action GotoClass<CR>
 " Recently Usage
 nnoremap <leader>fr :action RecentChangedFiles<CR>
 " Recent Location
@@ -297,10 +292,12 @@ nnoremap <C-n> :action Generate<CR>
 inoremap <C-S-n> <ESC>:action HippieBackwardCompletion<CR>a
 
 " <m> <Bookmarks>
-" Show All
-nnoremap <leader>ma :action ShowBookmarks<CR>
 " Toggle
 nnoremap <leader>mm :action ToggleBookmark<CR>
+" Show All
+nnoremap <leader>ma :action ShowBookmarks<CR>
+" List
+nnoremap <leader>ml :action ActivateBookmarksToolWindow<CR>
 " Edit Memo
 nnoremap <leader>me :action EditBookmark<CR>
 " Previous
@@ -319,11 +316,12 @@ nnoremap <leader>m] :action GotoNextBookmark<CR>
 " <`> last window
 nnoremap <silent> <leader>` <C-S-6>
 
-" <F1>
+" <F1> File Finder
+nnoremap <F1> :NERDTree<CR>
+nnoremap <leader><F1> :NERDTreeFind<CR>
 
-" <F2> File Finder
-nnoremap <F2> :NERDTree<CR>
-nnoremap <leader><F2> :NERDTreeFind<CR>
+" <F2> Bookmarks
+nnoremap <F2> :action ActivateBookmarksToolWindow<CR>
 
 " <F3> TODO
 nnoremap <F3> :action ActivateTODOToolWindow<CR>
@@ -375,4 +373,13 @@ nnoremap <leader><F12> :action Terminal.OpenInTerminal<CR>
 " nnoremap <leader>gd :action Compare.SameVersion<CR>
 " " Branches
 " nnoremap <leader>gb :action Git.Branches<CR>
+
+" nnoremap <leader>ss :action Find<CR>
+" vnoremap <leader>ss :action Find<CR>
+" nnoremap <leader>sg :action FindInPath<CR>
+" vnoremap <leader>sg :action FindInPath<CR>
+" nnoremap <leader>st :action ActivateTODOToolWindow<CR>
+" vnoremap <leader>st :action ActivateTODOToolWindow<CR>
+" nnoremap <leader>sp :action FindInPath<CR>
+" vnoremap <leader>sp :action FindInPath<CR>
 
