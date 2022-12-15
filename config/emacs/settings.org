@@ -829,6 +829,7 @@ M-x lsp-install-server <RET> ts-ls <RET>
        sh-mode         ;; sh/bash
        typescript-mode ;; typescript
        python-mode     ;; python
+       elixir-mode     ;; elixir
        web-mode        ;; html/css/javascript
        ) . lsp-deferred))
 
@@ -896,7 +897,9 @@ M-x lsp-install-server <RET> ts-ls <RET>
 
 ** Elixir
 #+begin_src emacs-lisp
-  (use-package elixir-mode)
+  (use-package elixir-mode
+    :config
+    (setq elixir-basic-offset 2))
 #+end_src
 
 ** Lisp
@@ -2220,6 +2223,8 @@ M-x lsp-install-server <RET> ts-ls <RET>
        ("py2" . "python2")
        ("py3" . "python3")
        ("rb" . "ruby")
+       ("exs" . "elixir")
+       ("ex" . "elixir")
        ("go" . "go run")
        ("hs" . "runhaskell")
        ("js" . "deno run")
