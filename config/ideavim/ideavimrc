@@ -61,9 +61,7 @@ nnoremap <silent> ws <C-w>s<C-w>j
 " V split
 nnoremap <silent> wv <C-w>v<C-w>l
 " Only
-nnoremap <silent> wo :action CloseAllEditorsButActive<CR>
-" " Only
-" nnoremap <silent> wo :action HideAllWindows<CR>
+nnoremap <silent> wo :action HideAllWindows<CR>
 
 " <e> <Error>
 " like Emacs
@@ -279,7 +277,9 @@ nnoremap <leader>xr :action Rerun<CR>
 
 " <b> <Buffer>
 " Buffers
-nnoremap <leader>b :action Switcher<CR>
+nnoremap <leader>bb :action Switcher<CR>
+" " Only
+nnoremap <leader>bo :action CloseAllEditorsButActive<CR>
 " " kill Left
 " nnoremap <leader>bl :action CloseAllToTheLeft<CR>
 " " kill Right
@@ -308,6 +308,8 @@ nnoremap <leader>mn :action GotoNextBookmark<CR>
 nnoremap <leader>m] :action GotoNextBookmark<CR>
 
 " <,>
+" Buffers
+nnoremap <leader>, :action Switcher<CR>
 
 " <.>
 
