@@ -481,8 +481,8 @@ nmap <silent> s. <Plug>(easymotion-repeat)
 vmap <silent> s. <Plug>(easymotion-repeat)
 
 " Fix cursor on middle of screen
-nnoremap <C-d> <C-d>M
-nnoremap <C-u> <C-u>M
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
 
 " "g" is vim's goto func.
 nnoremap <silent> g[ :GitGutterPrevHunk<CR>
