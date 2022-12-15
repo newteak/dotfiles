@@ -44,20 +44,6 @@
 #+end_src
 
 ** GC
-*** Increase runtime performance
-#+begin_src emacs-lisp
-  ;; 1024 * 1024 * 1024 = 1G
-  (setq gc-cons-threshold (eval-when-compile (* 1024 1024 1024 4)))
-  (add-hook 'after-init-hook
-    (lambda ()
-      (setq gc-cons-threshold (eval-when-compile (* 1024 1024 1024 2)))))
-#+end_src
-
-*** Start GC whenever losing focus on emacs
-#+begin_src emacs-lisp
-  (add-hook 'focus-out-hook 'garbage-collect)
-#+end_src
-
 *** GC when in minibuffer
 ref: https://github.com/DiamondBond/emacs/blob/master/config.org
 #+begin_src emacs-lisp
@@ -129,11 +115,6 @@ I don't like stun grenade.
   (setq ring-bell-function 'ignore)
 #+end_src
 
-** Current line highlighting
-;; #+begin_src emacs-lisp
-;;   (global-hl-line-mode t)
-;; #+end_src
-
 ** Line wrap
 #+begin_src emacs-lisp
   (global-visual-line-mode t)
@@ -183,12 +164,6 @@ I don't like stun grenade.
 #+begin_src emacs-lisp
   (use-package rg)
   (use-package wgrep)
-#+end_src
-
-** flyspell-corret package
-#+begin_src emacs-lisp
-  (use-package flyspell-correct
-    :after flyspell)
 #+end_src
 
 ** recentf
@@ -297,16 +272,10 @@ the window.
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package doom-themes
-    :custom
-    (doom-themes-enable-bold t)
-    (doom-themes-enable-italic t)
+  (use-package zenburn-theme
+    :ensure t
     :config
-    (setq doom-themes-treemacs-theme "doom-colors")
-    (doom-themes-org-config)
-    (doom-themes-treemacs-config))
-
-  (load-theme 'doom-gruvbox t)
+    (load-theme 'zenburn t))
 #+end_src
 
 ** Status bar
@@ -321,13 +290,10 @@ the window.
     (setq doom-modeline-workspace-name t)
     (setq display-time-format " %I:%M")
     (setq display-time-default-load-average nil)
-    (setq doom-modeline-vcs-max-length 12)
     (setq doom-modeline-env-version t)
     (line-number-mode)
     (column-number-mode)
-    ;; (display-battery-mode)
     (display-time-mode)
-    (vc-mode)
     )
 #+end_src
 
@@ -2156,25 +2122,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
     ("q" nil))
 #+end_src
 
-*** Spell
-#+begin_src emacs-lisp
-  (defhydra custom/hydra-spell-checker (:hint nil)
-    "
-       Command
-  -----------------
-      _t_oggle
-      _k_ ↑
-      _j_ ↓
-      e_x_ecute
-      _q_uit
-  "
-    ("t" custom/toggle-spell-check)
-    ("k" custom/flyspell-goto-previous-error)
-    ("j" flyspell-goto-next-error)
-    ("x" flyspell-correct-at-point)
-    ("q" nil))
-#+end_src
-
 ** Buffer
 *** kill other buffers
 #+begin_src emacs-lisp
@@ -2401,62 +2348,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
     "Go to recent files."
     (interactive)
     (funcall (local-key-binding "r")))
-#+end_src
-
-** Spell
-#+begin_src emacs-lisp
-  ;; I copied this code from http://pragmaticemacs.com/emacs/jump-back-to-previous-typo/
-  (defun custom/flyspell-goto-previous-error (arg)
-    "Go to arg previous spelling error."
-    (interactive "p")
-    (while (not (= 0 arg))
-      (let ((pos (point))
-             (min (point-min)))
-        (if (and (eq (current-buffer) flyspell-old-buffer-error)
-              (eq pos flyspell-old-pos-error))
-          (progn
-            (if (= flyspell-old-pos-error min)
-              ;; goto beginning of buffer
-              (progn
-                (message "Restarting from end of buffer")
-                (goto-char (point-max)))
-              (backward-word 1))
-            (setq pos (point))))
-        ;; seek the next error
-        (while (and (> pos min)
-                 (let ((ovs (overlays-at pos))
-                        (r '()))
-                   (while (and (not r) (consp ovs))
-                     (if (flyspell-overlay-p (car ovs))
-                       (setq r t)
-                       (setq ovs (cdr ovs))))
-                   (not r)))
-          (backward-word 1)
-          (setq pos (point)))
-        ;; save the current location for next invocation
-        (setq arg (1- arg))
-        (setq flyspell-old-pos-error pos)
-        (setq flyspell-old-buffer-error (current-buffer))
-        (goto-char pos)
-        (if (= pos min)
-          (progn
-            (message "No more miss-spelled word!")
-            (setq arg 0))
-          (forward-word)))))
-
-  (defun custom/spell-check ()
-    (interactive)
-    (flyspell-mode 1)
-    (flyspell-buffer))
-
-  (defun custom/toggle-spell-check ()
-    (interactive)
-    (let ((toggle
-            (if flyspell-mode
-              t nil)))
-      (if toggle
-        (flyspell-mode 0)
-        (custom/spell-check))))
 #+end_src
 
 ** Org
