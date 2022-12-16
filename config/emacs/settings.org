@@ -59,6 +59,17 @@ ref: https://github.com/DiamondBond/emacs/blob/master/config.org
   (add-hook 'minibuffer-exit-hook #'custom/minibuffer-exit-hook)
 #+end_src
 
+*** Adjust gc-cons-threshold
+ref: https://emacs-lsp.github.io/lsp-mode/page/performance/
+#+begin_src emacs-lisp
+(setq gc-cons-threshold 100000000)
+#+end_src
+
+*** Increase the amount of data which Emacs reads from the process
+#+begin_src emacs-lisp
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+#+end_src
+
 ** Mute warning package cl is deprecated
 #+begin_src emacs-lisp
   (setq byte-compile-warnings '(cl-functions))
@@ -272,10 +283,15 @@ the window.
 
 ** Theme
 #+begin_src emacs-lisp
-  (use-package zenburn-theme
-    :ensure t
-    :config
-    (load-theme 'zenburn t))
+  (use-package doom-themes
+    :custom
+    (doom-themes-enable-bold t)
+    (doom-themes-enable-italic t)
+    (setq doom-themes-treemacs-theme "doom-colors")
+    (doom-themes-org-config)
+    (doom-themes-treemacs-config))
+
+  (load-theme 'doom-gruvbox t)
 #+end_src
 
 ** Status bar
@@ -458,13 +474,13 @@ the window.
 
 ** Indent
 #+begin_src emacs-lisp
-  (use-package highlight-indent-guides
-    :defer t
-    :hook
-    (prog-mode  . highlight-indent-guides-mode)
-    :custom
-    (highlight-indent-guides-responsive t)
-    (highlight-indent-guides-method 'character))
+  ;; (use-package highlight-indent-guides
+  ;;   :defer t
+  ;;   :hook
+  ;;   (prog-mode  . highlight-indent-guides-mode)
+  ;;   :custom
+  ;;   (highlight-indent-guides-responsive t)
+  ;;   (highlight-indent-guides-method 'character))
 #+end_src
 
 ** Show whitespace
@@ -545,6 +561,12 @@ the window.
     (add-hook 'after-revert-hook #'bm-buffer-restore))
 #+end_src
 
+** Spell
+#+begin_src emacs-lisp
+  (use-package flyspell-correct
+    :after flyspell)
+#+end_src
+
 ** Focus Mode
 #+begin_src emacs-lisp
   (use-package writeroom-mode)
@@ -588,12 +610,6 @@ the window.
   (add-hook 'after-init-hook 'custom/persp-my-setup)
 #+end_src
 
-** Dictionary
-#+begin_src emacs-lisp
-  (use-package define-word
-    :commands define-word define-word-at-point)
-#+end_src
-
 ** Help
 #+begin_src emacs-lisp
   (use-package helpful
@@ -606,6 +622,17 @@ the window.
     ([remap describe-command] . helpful-command)
     ([remap describe-variable] . counsel-describe-variable)
     ([remap describe-key] . helpful-key))
+#+end_src
+
+** Syntax error
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :config
+    (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t))
+    )
+
+  (setq flycheck-check-syntax-automatically
+    '(save mode-enable))
 #+end_src
 
 * Development
@@ -2122,6 +2149,8 @@ M-x lsp-install-server <RET> ts-ls <RET>
     ("q" nil))
 #+end_src
 
+*** Spell
+
 ** Buffer
 *** kill other buffers
 #+begin_src emacs-lisp
@@ -2426,6 +2455,62 @@ M-x lsp-install-server <RET> ts-ls <RET>
         (list type path))))
 #+end_src
 
+** Spell
+#+begin_src emacs-lisp
+  ;; I copied this code from http://pragmaticemacs.com/emacs/jump-back-to-previous-typo/
+  (defun custom/flyspell-goto-previous-error (arg)
+    "Go to arg previous spelling error."
+    (interactive "p")
+    (while (not (= 0 arg))
+      (let ((pos (point))
+             (min (point-min)))
+        (if (and (eq (current-buffer) flyspell-old-buffer-error)
+              (eq pos flyspell-old-pos-error))
+          (progn
+            (if (= flyspell-old-pos-error min)
+              ;; goto beginning of buffer
+              (progn
+                (message "Restarting from end of buffer")
+                (goto-char (point-max)))
+              (backward-word 1))
+            (setq pos (point))))
+        ;; seek the next error
+        (while (and (> pos min)
+                 (let ((ovs (overlays-at pos))
+                        (r '()))
+                   (while (and (not r) (consp ovs))
+                     (if (flyspell-overlay-p (car ovs))
+                       (setq r t)
+                       (setq ovs (cdr ovs))))
+                   (not r)))
+          (backward-word 1)
+          (setq pos (point)))
+        ;; save the current location for next invocation
+        (setq arg (1- arg))
+        (setq flyspell-old-pos-error pos)
+        (setq flyspell-old-buffer-error (current-buffer))
+        (goto-char pos)
+        (if (= pos min)
+          (progn
+            (message "No more miss-spelled word!")
+            (setq arg 0))
+          (forward-word)))))
+
+  (defun custom/spell-check ()
+    (interactive)
+    (flyspell-mode 1)
+    (flyspell-buffer))
+
+  (defun custom/toggle-spell-check ()
+    (interactive)
+    (let ((toggle
+            (if flyspell-mode
+              t nil)))
+      (if toggle
+        (flyspell-mode 0)
+        (custom/spell-check))))
+#+end_src
+
 ** Persp
 #+begin_src emacs-lisp
   (defun custom/persp-set-keybind ()
@@ -2477,3 +2562,7 @@ M-x lsp-install-server <RET> ts-ls <RET>
       ))
 #+end_src
 
+* TODO
+** spell check
+** remove unused package
+** debug
