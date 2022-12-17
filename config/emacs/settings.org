@@ -2566,3 +2566,6 @@ M-x lsp-install-server <RET> ts-ls <RET>
 ** spell check
 ** remove unused package
 ** debug
+** delete git keybinding
+git은 터미널에서 사용 + tig를 사용하는 것이 더욱 편리하다고 느껴지기 때문에
+
