@@ -359,6 +359,7 @@ the window.
     (general-define-key
       ;; "M-q" TODO
       "M-w" 'save-buffer     ;; write
+      "M-ㅈ" 'save-buffer     ;; write
       ;; "M-e" TODO
       "M-r" 'counsel-recentf ;; recent
       ;; "M-t" TODO
@@ -784,8 +785,6 @@ the window.
       (define-key evil-visual-state-map (kbd "<f1>") 'helpful-at-point)
 
       ;; insert mode
-      (define-key evil-insert-state-map (kbd "M-;") 'company-yasnippet)
-
       (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
       (define-key evil-insert-state-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
 
@@ -1045,6 +1044,7 @@ the window.
   # --
   $0`(yas-escape-text yas-selected-text)`")
     (setq yas-indent-line 'fixed)
+    (setq require-final-newline nil)
     (setq yas-snippet-dirs '("~/.local/share/snippets/yassnippets")))
 
   (use-package ivy-yasnippet)
@@ -1073,8 +1073,8 @@ the window.
       ("<tab>" . company-abort))
     :custom
     (global-company-mode t)
-    (company-minimum-prefix-length 2)
-    (company-idle-delay 0.0)
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.3)
     (company-dabbrev-downcase nil)
     (company-show-numbers t)
     (company-dabbrev-code-modes t)
@@ -1090,7 +1090,8 @@ the window.
                               company-dabbrev)))
 
   (use-package company-box
-    :hook (company-mode . company-box-mode)
+    :hook
+    (company-mode . company-box-mode)
     :init
     (setq company-box-icons-alist 'company-box-icons-all-the-icons)
     (setq company-box-backends-colors nil))
@@ -1664,7 +1665,6 @@ So manually set home directory
   (use-package rg)
 #+end_src
 
-
 * Library
 #+begin_src emacs-lisp
   (use-package s)
@@ -1703,7 +1703,6 @@ So manually set home directory
     :diminish
     :hook prog-mode org-mode)
 #+end_src
-
 
 * Functions
 ** Comment
@@ -2200,10 +2199,12 @@ So manually set home directory
         (shell-command $cmdStr $outputb )
         ;;
         )))
+
   (defvar custom/run-current-file-map nil "A association list that maps file extension to program path, used by `run-current-file'. First element is file suffix, second is program name or path. You can add items to it.")
   (setq
     custom/run-current-file-map
     '(
+       ("c" . "gjrc")
        ("php" . "php")
        ("pl" . "perl")
        ("py" . "python3")
@@ -2560,8 +2561,13 @@ So manually set home directory
 #+end_src
 
 * TODO
-** workgroups2
 ** spell check
-** string-inflection
-** Dumb Jump
-** dap-mode
+*** flyspell
+** go to definition
+*** Dumb Jump
+** Text conversion
+*** string-inflection
+** debug
+*** dap-mode
+** indent highlight
+*** ???
