@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# gcc jsut run code
+
+gcc $1 && ./a.out && rm a.out
