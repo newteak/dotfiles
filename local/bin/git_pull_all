@@ -3,6 +3,7 @@
 CWD=`pwd`;
 
 cd ${XDG_DOCUMENTS_DIR="$HOME/Documents"}/wiki; git pull &
+cd ${XDG_DOCUMENTS_DIR="$HOME/Documents"}/org-roam; git pull &
 cd ${XDG_DOCUMENTS_DIR="$HOME/Documents"}/org; git pull &
 cd ${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles; git pull &
 cd ${XDG_DATA_HOME:-$HOME/.local/share}/snippets; git pull &

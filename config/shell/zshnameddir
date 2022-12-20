@@ -11,6 +11,7 @@ hash -d lcs=~/.local/share
 hash -d mnt=/mnt 
 hash -d mu=~/Music 
 hash -d org=~/Documents/org 
+hash -d roam=~/Documents/org-roam 
 hash -d pic=~/Pictures 
 hash -d play=~/Documents/playground 
 hash -d project=~/Projects 

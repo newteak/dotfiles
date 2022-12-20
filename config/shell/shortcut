@@ -12,6 +12,7 @@ lcs="cd ~/.local/share && ls -a" \
 mnt="cd /mnt && ls -a" \
 mu="cd ~/Music && ls -a" \
 org="cd ~/Documents/org && ls -a" \
+roam="cd ~/Documents/org-roam && ls -a" \
 pic="cd ~/Pictures && ls -a" \
 play="cd ~/Documents/playground && ls -a" \
 project="cd ~/Projects && ls -a" \

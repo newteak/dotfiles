@@ -12,6 +12,7 @@ lcs      ~/.local/share
 mnt     /mnt
 mu       ~/Music
 org      ~/Documents/org
+org      ~/Documents/org-roam
 pic      ~/Pictures
 play     ~/Documents/playground
 project  ~/Projects
