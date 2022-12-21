@@ -24,6 +24,8 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
   Plug 'simeji/winresizer'
   Plug 'jremmen/vim-ripgrep'
   Plug 'stefandtw/quickfix-reflector.vim'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'preservim/nerdtree'
 
   " Color
   Plug 'ap/vim-css-color'
@@ -34,10 +36,8 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
   Plug 'Yggdroot/indentLine'
 
   " DEPRECATED
-  " Plug 'jiangmiao/auto-pairs'
   " Plug 'tpope/vim-endwise'
   " Plug 'APZelos/blamer.nvim'
-  " Plug 'preservim/nerdtree'
   " Plug 'junegunn/goyo.vim'
 call plug#end()
 
@@ -60,6 +60,9 @@ if has('nvim')
         \ |     aug! UltiSnips_AutoTrigger
         \ | endif
 endif
+
+" " plugin name: nerdtree
+let NERDTreeQuitOnOpen=1
 
 " plugin name: vim-gutter
 let g:gitgutter_map_keys=0
@@ -535,16 +538,14 @@ nmap <silent> <leader>m[ <Plug>BookmarkPrev
 
 nnoremap <silent> <F1> :h <C-r>=expand("<cword>")<CR>
 vnoremap <silent> <F1> y :h <C-r>0
-nnoremap <silent> <F2> :e.<CR>
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
+nnoremap <silent> <leader><F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :Lines TODO<CR>
 nnoremap <silent> <F4> :UltiSnipsEdit<cr>
 nnoremap <silent> <F8> :TagbarToggle<cr>
 nnoremap <silent> <F12> <C-z>
 
 " DEPRECATED
-
-" " plugin name: nerdtree
-" let NERDTreeQuitOnOpen=1
 
 " " plugin name: blamer
 " let g:blamer_enabled = 1
@@ -569,9 +570,6 @@ nnoremap <silent> <F12> <C-z>
 " autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " nnoremap <silent> <F11> :Goyo<cr>
-
-" nnoremap <silent> <F2> :NERDTreeToggle<CR>
-" nnoremap <silent> <leader><F2> :NERDTreeFind<CR>
 
 " nvim defualt
 " vim visual star search
