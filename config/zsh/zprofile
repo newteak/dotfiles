@@ -104,6 +104,5 @@ if [[ "$OSTYPE" == "linux"* ]]; then
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
