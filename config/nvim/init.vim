@@ -220,6 +220,9 @@ augroup END
 " plugin name: vim-better-whitespace
 let g:better_whitespace_enabled=1
 
+" save the buffer whenever text is changed
+autocmd TextChanged,TextChangedI <buffer> silent write
+
 " Set Section
 set nocompatible
 
