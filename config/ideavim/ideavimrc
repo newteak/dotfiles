@@ -156,7 +156,7 @@ nnoremap <leader>] :action NextTab<CR>
 vnoremap <leader>] :action NextTab<CR>
 
 " <a> <???>
-inoremap <C-a> <Home> " like emacs
+inoremap <C-a> <Home>
 " nnoremap <leader>a :action $SelectAll<CR>
 " vnoremap <leader>a :action $SelectAll<CR>
 
@@ -383,4 +383,3 @@ nnoremap <leader><F12> :action Terminal.OpenInTerminal<CR>
 " vnoremap <leader>st :action ActivateTODOToolWindow<CR>
 " nnoremap <leader>sp :action FindInPath<CR>
 " vnoremap <leader>sp :action FindInPath<CR>
-
