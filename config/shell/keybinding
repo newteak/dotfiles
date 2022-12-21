@@ -99,7 +99,6 @@ projectile() {
     ~/Documents \
     ~/Documents/study/ \
     ~/Documents/playground/ \
-    ~/Templates \
     -maxdepth 1 -mindepth 0 -type d | fzf) &&
   print -s cd "$dir" &&
   cd "$dir" &&
