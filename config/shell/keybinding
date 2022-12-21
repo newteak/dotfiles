@@ -98,8 +98,9 @@ projectile() {
   dir=$(find \
     ~/Documents \
     ~/Documents/study/ \
+    ~/Projects/ \
     ~/Documents/playground/ \
-    -maxdepth 1 -mindepth 0 -type d | fzf) &&
+    -maxdepth 3 -mindepth 0 -type d | fzf) &&
   print -s cd "$dir" &&
   cd "$dir" &&
   ls
