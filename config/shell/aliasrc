@@ -4,7 +4,9 @@
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vi="nvim" vimdiff="nvim -d"
 
 # Use $XINITRC variable if file exists.
-[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+if [[ "$OSTYPE" == "linux"* ]]; then
+    [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+fi
 
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
@@ -61,6 +63,7 @@ alias \
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls="ls -G";
+    alias xcopy="pbcopy";
 fi
 
 if [[ "$OSTYPE" == "linux"* ]]; then
