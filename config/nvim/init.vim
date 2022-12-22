@@ -228,7 +228,7 @@ else
 endif
 
 if g:auto_save
-    autocmd TextChanged,TextChangedI <buffer> silent write
+    autocmd TextChanged,InsertLeave <buffer> silent write
 endif
 
 " Set Section
