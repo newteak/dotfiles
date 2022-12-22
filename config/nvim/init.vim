@@ -220,7 +220,7 @@ augroup END
 " plugin name: vim-better-whitespace
 let g:better_whitespace_enabled=1
 
-" save the buffer whenever text is changed
+" Autosave - save the buffer whenever text is changed
 if expand("%:p") =~ 'COMMIT_EDITMSG'
   let g:auto_save = 0
 else
