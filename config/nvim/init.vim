@@ -221,7 +221,15 @@ augroup END
 let g:better_whitespace_enabled=1
 
 " save the buffer whenever text is changed
-autocmd TextChanged,TextChangedI <buffer> silent write
+if expand("%:p") =~ 'COMMIT_EDITMSG'
+  let g:auto_save = 0
+else
+  let g:auto_save = 1
+endif
+
+if g:auto_save
+    autocmd TextChanged,TextChangedI <buffer> silent write
+endif
 
 " Set Section
 set nocompatible
